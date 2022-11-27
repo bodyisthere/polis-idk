@@ -12,9 +12,10 @@ import handleValidationErrors from "./validations/handleValidationErrors.js";
 import checkAuth from "./utils/checkAuth.js";
 
 // "mongodb+srv://admin:wwwwww@cluster0.cvi7gkx.mongodb.net/policy?retryWrites=true&w=majority"
+// .connect(process.env.MONGODB_URI)
 //database connect
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect("mongodb+srv://admin:wwwwww@cluster0.cvi7gkx.mongodb.net/policy?retryWrites=true&w=majority")
   .then(() => console.log("БД подключена! :)"))
   .catch((err) => console.log("Ошибка базы данных: ", err));
 
@@ -66,17 +67,10 @@ app.delete('/post/:id', checkAuth, PostController.commentDelete);
 
 
 //server start
-app.listen(process.env.PORT || 4444, (err) => {
+app.listen(4444, (err) => {
   if (err) {
     return console.log(`Не удалось запустить сервер: ${err}`);
   }
 
   console.log("Сервер запущен! :)");
 });
-// app.listen(4444, (err) => {
-//   if (err) {
-//     return console.log(`Не удалось запустить сервер: ${err}`);
-//   }
-
-//   console.log("Сервер запущен! :)");
-// });

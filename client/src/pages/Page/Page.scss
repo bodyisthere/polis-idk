@@ -1,0 +1,23 @@
+.page {
+  width: 100%;
+  &__container {
+    max-width: 1890px;
+    padding: 10px 15px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  .add-new-post {
+    color: #1da1f2;
+  }
+  &__info {
+    width: 300px;
+  }
+  &__posts {
+    width: 64%;
+  }
+  &__suggestions {
+    width: 300px;
+  }
+}

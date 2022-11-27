@@ -1,0 +1,11 @@
+.posts {
+    min-width: 300px;
+    max-width: 1600px;
+    margin: 0px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__nothing {
+        font-size: 35px;
+    }
+}

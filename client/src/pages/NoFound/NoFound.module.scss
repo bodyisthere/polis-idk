@@ -1,0 +1,22 @@
+.noFound {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+  background: url("../../assets/img/NoFound.png");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  font-size: 120px;
+  font-weight: 400;
+}
+
+.subtext {
+  font-size: 50px;
+}

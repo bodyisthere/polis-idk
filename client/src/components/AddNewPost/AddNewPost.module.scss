@@ -1,0 +1,42 @@
+.addNewPost {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    border-radius: 15px;
+    background: #1b2730;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 40px;
+    position: relative;
+    &:hover {
+        transition-duration: 0.3s;
+        background-color: #c4d3e24f;;
+    }
+    &:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border-radius: 15px;
+        left: 0;
+        top:0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: all 0.5s;
+        box-shadow: 0 0 10px 40px #c4d3e24f;
+    }
+    &:active:after {
+        box-shadow: 0 0 0 0 #c4d3e24f;
+        position: absolute;
+        border-radius: 15px;
+        left: 0;
+        top:0;
+        opacity: 1;
+        transition: 0s;
+      }
+      &:active {
+        top: 1px;
+      }
+}

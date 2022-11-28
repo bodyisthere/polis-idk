@@ -1,4 +1,10 @@
+import './News.scss'
+
 export function News() {
-  return <h1>news</h1>;
+  return (
+    <div className="news">
+      новости
+    </div>
+  )
 }
 

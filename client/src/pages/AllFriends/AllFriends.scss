@@ -1,0 +1,93 @@
+.all-friends {
+    width: 100%;
+    &__container {
+        max-width: 1890px;
+        padding: 10px 15px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+    }
+    &__menu {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #1b2730;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+    &__menu-item {
+        padding: 15px;
+        width: 50%;
+        cursor: pointer;
+        transition: all 0.1s;
+        border-radius: 15px;
+        &:hover {
+            background: #5e6c79;
+            border-radius: 15px ;
+        }
+        &:first-child {
+            border-right: 2px solid #2a3843;
+        }
+        button {
+            background: transparent;
+            color: white;
+            font-size: 30px;
+        }
+    }
+    &__menu-item--active {
+        background: #5e6c79;
+    }
+    &__list {
+        background: #1b2730;
+        border-radius: 15px;
+        padding: 10px;
+    }
+    &__friend {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        padding: 10px;
+        border-radius: 15px;
+        font-size: 20px;
+        background: #2a3843;
+        cursor: pointer;
+        transition: all .07s;
+        &:hover {
+            background: #5e6c79;
+        }
+    }
+    &__friend-info {
+        display: flex;
+        align-items: center;
+    }
+    &__friend-avatar {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        object-position: center;
+        border-radius: 50%; 
+        margin-right: 10px;
+    }
+    &__friend-add {
+        color: green;
+        font-size: 40px;
+        background: white;
+        padding: 10px 20px;
+        border-radius: 10px;
+        &:hover {
+            background: rgb(90, 151, 90);
+        }
+    }
+    &__friend-remove {
+        color: red;
+        font-size: 40px;
+        background: white;
+        padding: 10px 25px;
+        border-radius: 10px;
+        &:hover {
+            background: rgb(86, 25, 25);
+        }
+    }
+}

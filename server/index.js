@@ -4,6 +4,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
+import EventEmitter from "events";
+
+
 
 //inner methods
 import { UserController, PostController, Universal } from "./controllers/index.js";
@@ -11,8 +14,6 @@ import { registrationValidation, loginValidation, postCreateValidation} from "./
 import handleValidationErrors from "./validations/handleValidationErrors.js";
 import checkAuth from "./utils/checkAuth.js";
 
-// "mongodb+srv://admin:wwwwww@cluster0.cvi7gkx.mongodb.net/policy?retryWrites=true&w=majority"
-// .connect(process.env.MONGODB_URI)
 //database connect
 mongoose
   .connect("mongodb+srv://admin:wwwwww@cluster0.cvi7gkx.mongodb.net/policy?retryWrites=true&w=majority")
@@ -40,7 +41,6 @@ app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
-
 //user methods
 app.post("/auth/registration" ,registrationValidation, handleValidationErrors, UserController.registration);
 app.post( "/auth/login", loginValidation, handleValidationErrors, UserController.login);
@@ -50,6 +50,7 @@ app.put("/friend/:id", checkAuth, UserController.toggleFriend);
 app.get("/page/:id", UserController.getOne);
 app.get("/friend-search", UserController.searchUser);
 
+//messages - long pulling
 
 
 //universal methods
@@ -74,3 +75,4 @@ app.listen(4444, (err) => {
 
   console.log("Сервер запущен! :)");
 });
+

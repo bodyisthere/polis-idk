@@ -1,7 +1,7 @@
 import React from "react";
+import { Link } from 'react-router-dom'
 
 import { MyContext } from "../../App";
-import PreviewProfileSkeleton from "./PreviewProfileSkeleton";
 
 function GuestPreviewProfile() {
     const { guest, setIsPopOpen, setPopMessage, userInfo, setGuest } = React.useContext(MyContext);
@@ -95,7 +95,10 @@ function GuestPreviewProfile() {
             <div className="preview-profile__info-field">Друзья <span>{guest.friendList.length}</span></div>
             <div className="preview-profile__info-field">Посты <span>{guest.posts.length}</span></div>
           </div>
-          <button className={`preview-profile__my-page`} disabled={inActive} onClick={toggleFriend}>{friendText}</button>
+          <div className="preview-profile__buttons">
+            <button className={`preview-profile__my-page`} disabled={inActive} onClick={toggleFriend}>{friendText}</button>
+            <Link to={`/conversation/${guest._id}`} className="preview-profile__send-message">Отправить сообщение</Link>
+          </div>
         </div>
         : 'skeleton preview'
     )

@@ -9,4 +9,5 @@ export { Auth } from './Auth/Auth.jsx';
 export { Pages } from './Page/Pages.jsx'
 export { GuestPage } from './Page/GuestPage.jsx'
 export { AllFriendsCheck } from './AllFriends/AllFriendsCheck.jsx'
+export { Conversation } from './Messages/Conversation.jsx'
 

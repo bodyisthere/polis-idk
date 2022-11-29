@@ -114,6 +114,20 @@
       font-weight: 400;
     }
   }
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+  }
+  &__send-message {
+    background: transparent;
+    color: #1da1f2;
+    font-size: 15px;
+    font-weight: 700;
+    transition: all .05s;
+    &:hover {
+      color: rgb(19, 138, 211);
+    }
+  }
   &__my-page {
     color: #1da1f2;
     font-size: 15px;

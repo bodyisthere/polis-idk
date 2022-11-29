@@ -1,29 +1,20 @@
-import { useState } from "react";
+import './Messages.scss'
+
+import Message from './Message.jsx'
 
 export function Messages() {
-  const [user, setUser] = useState({
-    name: 'artem ',
-    friends: ['stas, ','maks, ','dima, '],
-    posts: ['1, ','2, ','3, '],
-  })
-
-  // const { passwordHash, ...userData } = user._doc;
-  const change = () => {
-    console.log(user);
-    const { friends, ...name } = user;
-    console.log(name)
-    friends.push('sasha')
-    setUser({
-      name,
-      friends
-    })
-  }
-
   return (
-      <div className="test">
-        <button onClick={change}>change!</button>
+    <div className="messages">
+      <div className="messages__container">
+        <div className="messages__title">Ваши сообщения</div>
+        <div className="messages__list">
+          <Message />
+          <Message />
+          <Message />
+        </div>
       </div>
-    )
+    </div>
+  )
 }
 
 

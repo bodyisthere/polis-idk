@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import './NewPost.scss'
 
 import { MyContext } from "../../App";
+import { handleChangeFile } from '../../utils/handleChangeFile';
 
 export function NewPost() {
     const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
@@ -26,33 +27,19 @@ export function NewPost() {
         })
     }, [text, title, cover])
 
-    const handleChangeFile = async (e) => {
-        try {
-            const formData = new FormData();
-            const file = e.target.files[0];
-            formData.append('image', file);
-            const res = await fetch('http://localhost:4444/upload', {
-                method: 'post',
-                body: formData,
-                headers: {
-                    authorization: localStorage.getItem('token')
-                },
-            })
-
-            if(!res.ok) {
-                setIsPopOpen('declined');
-                setPopMessage('Загрузите корректное изображение');
-                setTimeout(() => setIsPopOpen(false), 5000);
-                throw new Error(res.message)
-            }
-
-            const resJson = await res.json();
-            setCover(resJson.url);
-            setIsPopOpen('success');
-            setTimeout(() => setIsPopOpen(false), 5000);
-        } catch (err) {
-            console.log(err)
+    const handleChangeCover = async (e) => {
+        const res = await handleChangeFile(e);
+        if(!res.ok) {
+            const json = await res.json();
+            setIsPopOpen('declined');
+            setPopMessage(json.message);
+            return setTimeout(() => setIsPopOpen(false), 5000);
         }
+
+        const json = await res.json();
+        setCover(json.url);
+        setIsPopOpen('success');
+        return setTimeout(() => setIsPopOpen(false), 5000);
     }
 
     const sendPost = async () => {
@@ -94,7 +81,7 @@ export function NewPost() {
     return (
         <div className="new-post">
             <div className="new-post__container">
-                <label>Загрузить превью<input onChange={handleChangeFile} type="file" name="image" accept="image/png, image/jpeg"/></label>
+                <label>Загрузить превью<input onChange={handleChangeCover} type="file" name="image" accept="image/png, image/jpeg"/></label>
                 <input type="title" className={error[0]?.param === 'title' || error[1]?.param === 'title' ? 'new-post__error' : ''} name="title" placeholder='Заголовок'onChange={e => setTitle(e.target.value)} value={title}/>
                 <textarea name="text" className={error[0]?.param === 'text' || error[1]?.param === 'text' ? 'new-post__error' : ''} placeholder='Введите текст статьи' onChange={e => setText(e.target.value)} value={text}></textarea>
                 <button className="new-post__submit" onClick={sendPost}>Отправить</button>

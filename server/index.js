@@ -4,15 +4,15 @@ import mongoose from "mongoose";
 import cors from "cors";
 import multer from "multer";
 import fs from "fs";
-import EventEmitter from "events";
-
-
+import { WebSocketServer } from 'ws';
 
 //inner methods
+import { wsConnection } from "./ws/ws.js";
 import { UserController, PostController, Universal } from "./controllers/index.js";
 import { registrationValidation, loginValidation, postCreateValidation} from "./validations/validations.js";
 import handleValidationErrors from "./validations/handleValidationErrors.js";
 import checkAuth from "./utils/checkAuth.js";
+
 
 //database connect
 mongoose
@@ -50,8 +50,11 @@ app.put("/friend/:id", checkAuth, UserController.toggleFriend);
 app.get("/page/:id", UserController.getOne);
 app.get("/friend-search", UserController.searchUser);
 
-//messages - long pulling
-
+//messages - websocket
+export const wss = new WebSocketServer({
+  port: 3001,
+}, () => console.log('Сокет сервер запущен!'));
+wss.on("connection", wsConnection)
 
 //universal methods
 app.post("/upload", checkAuth, upload.single("image"), Universal.upload);
@@ -72,7 +75,6 @@ app.listen(4444, (err) => {
   if (err) {
     return console.log(`Не удалось запустить сервер: ${err}`);
   }
-
-  console.log("Сервер запущен! :)");
+  console.log("Основной сервер запущен! :)");
 });
 

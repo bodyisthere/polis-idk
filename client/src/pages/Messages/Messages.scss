@@ -115,14 +115,25 @@
             background: rgb(212, 211, 211);
         }
     }
+    &__connection {
+        position: absolute;
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 15px;
+    }
+    &__connection--green {
+        background: rgb(16, 73, 16);
+    }
+    &__connection--red {
+        background: rgb(100, 9, 9);
+    }
 }
 
 .conversation-message {
     margin-bottom: 5px;
     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
     &__author {
         text-align: left;
         font-size: 15px;

@@ -1,8 +1,11 @@
-function ConversationMessage() {
+function ConversationMessage( { author, message, time}) {
     return (
         <div className="conversation-message">
-            <div className="conversation-message__author">Кириллов Данил:</div>
-            <div className="conversation-message__text">lorem*1000</div>
+            <div className="conversation-message__left">
+                <div className="conversation-message__author">{author}:</div>
+                <div className="conversation-message__text">{message}</div>
+            </div>
+            <div className="conversation-message__time">{time}</div>
         </div>
     )
 }

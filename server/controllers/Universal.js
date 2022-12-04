@@ -22,7 +22,7 @@ export const upload = async (req, res) => {
           url: `/${req.file.originalname}`,
         });
       } catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: err });
+        console.log(err.message);
+        return res.status(500).json({ message: err.message });
       }
 }

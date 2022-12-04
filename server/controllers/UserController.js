@@ -228,4 +228,9 @@ export const searchUser = async (req, res) => {
   }
 }
 
+export const messages = async (req, res) => {
+  res.status(200).json({
+    success: true,
+  })
+}
 

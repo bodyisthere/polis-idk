@@ -1,37 +1,24 @@
 import React from "react"
-import { useNavigate } from "react-router-dom";
 
 import { MyContext } from "../../App.jsx"
 import { GuestPage, Page } from "../index.js"
 import NoUser from "./NoUser.jsx";
 
+import { getPageInfo } from "../../utils/getPageInfo.js";
+
 
 export function Pages() {
-    const { userInfo, setGuest, guest } = React.useContext(MyContext)
+    const { userInfo, setGuest, guest, setIsPopOpen, setPopMessage } = React.useContext(MyContext)
     
-    const [ isLoading, setIsLoading ] = React.useState(false);
+    const [ isLoading, setIsLoading ] = React.useState(true);
     const [error, setError] = React.useState(false);
 
-    const navigate = useNavigate()
-    const goTo = (url) => navigate(url);
-
     React.useEffect(() => {
-        if(window.location.pathname.split('/')[2] !== userInfo._id)
-        fetch(`http://localhost:4444/page/${window.location.pathname.split('/')[2]}`)
-        .then(data => {
-            if(!data.ok) {
-                throw new Error('Пользователь не найден')
-            }
-            return data.json()
-        })
-        .then(json => {
-            setGuest(json); 
-            setIsLoading(false)
-        })
-        .catch(err => {
-            console.log(err);
-            setError(true);
-        })
+        if(window.location.pathname.split('/')[2] !== userInfo._id) {
+            getPageInfo(setGuest, setIsPopOpen, setPopMessage, setError, setIsLoading);
+        } else {
+            setIsLoading(false);
+        }
     }, [window.location.pathname])
 
     return (

@@ -4,6 +4,8 @@ import jwt from "jsonwebtoken";
 import UserModel from "../schemas/User.js";
 import PostModel from "../schemas/Post.js";
 
+import { getFriends } from "../func/getFriends.js";
+
 export const registration = async (req, res) => {
   try {
     const isUnique = await UserModel.findOne({ email: req.body.email });
@@ -90,7 +92,11 @@ export const loginWithToken = async (req, res) => {
     const userId = req.userId;
     const user = await UserModel.findById(userId);
 
+    const friends = await getFriends(user.friendList);
+
     const { passwordHash, email, ...userData } = user._doc;
+
+    userData.friendList = friends;
 
     res.json({
       ...userData,
@@ -108,7 +114,11 @@ export const getOne = async (req, res) => {
     const id = req.params.id;
     const user = await UserModel.findById(id);
 
+    const friends = await getFriends(user.friendList);
+
     const { passwordHash, email, ...userData } = user._doc;
+
+    userData.friendList = friends;
 
     res.json({
       ...userData,
@@ -144,19 +154,8 @@ export const toggleFriend = async (req, res) => {
 
     if (isTheyFriend()) {
       action = "Вы добавили этого человека в друзья";
-      const friendInfo = {
-        _id: friend._id,
-        fullName: friend.fullName,
-        avatarUrl: friend.avatarUrl,
-      };
-      currentUser.friendList = [...currentUser.friendList, friendInfo];
-
-      const currentInfo = {
-        _id: currentUser._id,
-        fullName: currentUser.fullName,
-        avatarUrl: currentUser.avatarUrl,
-      };
-      friend.friendList = [...friend.friendList, currentInfo];
+      currentUser.friendList = [...currentUser.friendList, friend._id];
+      friend.friendList = [...friend.friendList, currentUser._id];
     } else {
       action = "Вы удалили этого человека из друзей";
       currentUser.friendList = currentUser.friendList.filter(
@@ -233,4 +232,5 @@ export const messages = async (req, res) => {
     success: true,
   })
 }
+
 

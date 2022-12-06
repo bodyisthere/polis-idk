@@ -57,7 +57,7 @@ export function Conversation() {
         fetchData()
     }, [])
 
-    console.log(messages[0])
+    console.log(messages)
 
     return (
         isLoading 
@@ -72,8 +72,7 @@ export function Conversation() {
                 </div>
                 {isConnected ? <div className="conversation__connection conversation__connection--green">Соединение установлено</div> : <div className="conversation__connection conversation__connection--red">Соединение не установлено</div>}
                 <div className="conversation__body">
-                    {messages[0]?.length > 0 ? messages[0].map((el, index) => <ConversationMessage key={index} {...el} />) : ''}
-                    {messages[1] ? messages.slice(1).map((el, index) => <ConversationMessage key={index} {...el} />) : ''}
+                    {messages?.length >= 1 ? messages.map((el, index) => <ConversationMessage {...el} key={index}/>) : <div className="conversation__no-message">Сообщений нет😞</div>}
                 </div>
                 <div className="conversation__form">
                     <textarea type="text" placeholder="Введите сообщение" value={msg} onChange={((e) => setMsg(e.target.value))}/>

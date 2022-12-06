@@ -82,7 +82,6 @@ export const toggleLike = async (req, res) => {
     const postId = req.params.id;
 
     const post = await PostModel.findById(postId);
-
   
     if(post.likes.includes(userId)) {
       post.likes = post.likes.filter(el => el !== userId);

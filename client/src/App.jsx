@@ -5,6 +5,7 @@ import "./App.scss";
 
 import { Header, PopUp } from './components/index.js'
 import Navigation from "./navigation/Navigation";
+import MessagePop from "./pages/Messages/MessagePop";
 
 export const MyContext = React.createContext("");
 
@@ -49,6 +50,7 @@ function App() {
 
   return (
     <div className="App">
+      <MessagePop />
       {isPopOpen ? <PopUp isPopOpen={isPopOpen} popMessage={popMessage}/> : ""}
       <MyContext.Provider value={{ userInfo, setUserInfo, setIsPopOpen, guest, setGuest, isAuth, setIsAuth, isPostOpen, setIsPostOpen, currentPost, setCurrentPost, setPopMessage }}>
         {isLoading 

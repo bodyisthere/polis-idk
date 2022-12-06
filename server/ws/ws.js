@@ -18,7 +18,7 @@ export async function wsConnection (ws, req) {
   while(i < user.messages.length && !theyHaveDialogue ) {
     if(user.messages[i].id === guestId) {
       theyHaveDialogue = true;
-      dialogue = user.messages[i]
+      dialogue = user.messages[i];
     }
     i++;
   }
@@ -30,33 +30,42 @@ export async function wsConnection (ws, req) {
     await user.save()
     await guest.save()
     ws.id = dialogueId;
-    dialogue = {id: userId, dialogueId, msg: []};
+    dialogue = {id: userId, dialogueId: dialogueId, msg: []};
     ws.send('Диалог создан!')
   } 
 
   if(theyHaveDialogue) {
     ws.id = dialogue.dialogueId;
-    ws.send(JSON.stringify(dialogue.msg))
+    ws.send(JSON.stringify(dialogue.msg));
   }
 
   ws.on('message', async (rawMessage) => {
     const {author, message, time} = JSON.parse(rawMessage);
-    dialogue.msg.push({author, message, time});
-    guest.messages = guest.messages.map(el => el.id === userId ? {...el, msg: dialogue.msg} : el)
-    console.log(guest.messages)
+    dialogue.msg.push({author, message, time})
+    guest.messages = guest.messages.map(el => {
+      if(el.id === userId) {
+        el.msg = JSON.stringify(dialogue.msg);
+        return el
+      } 
+      return el;
+    });
     await guest.save();
-    broadcastMessage(message, author, time, theyHaveDialogue ? dialogue.dialogueId : dialogueId)
+    console.log(dialogue.dialogueId)
+    console.log(ws.id)
+    broadcastMessage(message, author, time, theyHaveDialogue ? dialogue.dialogueId : dialogueId);
   })
 
   ws.on('close', async () => {
-    user.messages = user.messages.map(el => el.id === guestId ? {...el, msg: dialogue.msg} : el)
+    user.messages = user.messages.map(el => {
+      if(el.id === guestId) {
+        el.msg = JSON.stringify(dialogue.msg);
+        return el; 
+      } 
+      return el;
+    });
     await user.save();
     console.log(`${user.fullName} closed`)
   })
-
-}
-
-function saveMessage(user, guest) {
 
 }
 

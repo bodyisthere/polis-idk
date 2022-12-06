@@ -7,8 +7,14 @@
   background: #1b2730;
   border-radius: 15px;
   padding: 10px;
-  overflow: hidden;
+  overflow: auto;
   font-family: 'Mulish', sans-serif;
+  -ms-overflow-style: none;
+        scrollbar-width: none;
+        &::-webkit-scrollbar {
+            width: 0;
+            height: 0;
+      }
   &__list {
     width: 100%;
   }

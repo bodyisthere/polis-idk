@@ -5,7 +5,7 @@ import './Posts.scss'
 import { Post } from '../index.js';
 import { MyContext } from "../../App.jsx";
 
-export function Posts() {
+export function Posts( { like } ) {
   const { userInfo, guest } = React.useContext(MyContext);
 
   return (
@@ -21,7 +21,7 @@ export function Posts() {
       : 
       guest.posts.length >= 1 
         ? 
-        guest.posts.map((el) => <Post key={el} id={el}/>) 
+        guest.posts.map((el) => <Post like={like} key={el} id={el}/>) 
         : 
         <div className="posts__nothing">Постов нет😔</div>}
     </div>

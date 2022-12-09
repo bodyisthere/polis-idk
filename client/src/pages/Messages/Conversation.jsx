@@ -29,33 +29,33 @@ export function Conversation() {
         setMsg("");
     }
 
-    React.useEffect(() => {
-        async function fetchData() {
-            const info = await guest ? setIsLoading(false) : getPageInfo(setGuest, setIsPopOpen, setPopMessage, '', setIsLoading);
-            if(userInfo && guest && !socket.current?.url) {
-                socket.current = new WebSocket(`ws://localhost:3001?${userInfo._id}&with=${guest._id}`);
+    // React.useEffect(() => {
+    //     async function fetchData() {
+    //         const info = await guest ? setIsLoading(false) : getPageInfo(setGuest, setIsPopOpen, setPopMessage, '', setIsLoading);
+    //         if(userInfo && guest && !socket.current?.url) {
+    //             socket.current = new WebSocket(`ws://localhost:3001?${userInfo._id}&with=${guest._id}`);
 
-                socket.current.onopen = () => {
-                    setIsConnected(true);
-                }
+    //             socket.current.onopen = () => {
+    //                 setIsConnected(true);
+    //             }
 
-                socket.current.onmessage = (message) => {
-                    const current = JSON.parse(message.data);
-                    setMessages(prev => [...prev, current]);
-                }
+    //             socket.current.onmessage = (message) => {
+    //                 const current = JSON.parse(message.data);
+    //                 setMessages(prev => [...prev, current]);
+    //             }
 
-                socket.current.onclose = (code, reason) => {
-                    setIsConnected(false);
-                }
+    //             socket.current.onclose = (code, reason) => {
+    //                 setIsConnected(false);
+    //             }
                 
-                socket.current.onerror = (error) => {
-                    setIsConnected(false);
-                    console.log(error);
-                }
-            }
-        }
-        fetchData()
-    }, [])
+    //             socket.current.onerror = (error) => {
+    //                 setIsConnected(false);
+    //                 console.log(error);
+    //             }
+    //         }
+    //     }
+    //     fetchData()
+    // }, [])
 
     console.log(messages)
 

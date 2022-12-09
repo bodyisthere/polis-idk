@@ -54,7 +54,7 @@ export function Header() {
               <Link to="/notifications">
                 <i className="fa-solid fa-bell"></i>
               </Link>
-              {/* <span className="header__notifications-count">1</span> */}
+              <span className="header__notifications-count">{userInfo.notifications.length}</span>
             </li>
           </ul>
           {userInfo ? (

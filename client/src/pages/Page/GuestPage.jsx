@@ -11,7 +11,7 @@ export function GuestPage() {
                     <GuestFriendsList />
                 </div>
                 <div className="page__posts">
-                    <Posts />
+                    <Posts/>
                 </div>
                 <div className="page__suggestions">
                     <Suggestions />

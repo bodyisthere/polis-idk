@@ -2,9 +2,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 import UserModel from "../schemas/User.js";
-import PostModel from "../schemas/Post.js";
-
-import { getFriends } from "../func/getFriends.js";
+import { User } from "../Classes/ClassUser.js";
+import { handleError } from '../utils/handleError.js'
 
 export const registration = async (req, res) => {
   try {
@@ -41,10 +40,8 @@ export const registration = async (req, res) => {
       ...userData
     });
   } catch (err) {
-    console.log(`Ошибка регистрации: ${err}`);
-    res.status(500).json({
-      message: "Не удалось зарегистрироваться",
-    });
+    console.log(err);
+    handleError(res, "Не удалось зарегестрироваться")
   }
 };
 
@@ -90,9 +87,10 @@ export const login = async (req, res) => {
 export const loginWithToken = async (req, res) => {
   try {
     const userId = req.userId;
+    const userClass = new User(userId);
     const user = await UserModel.findById(userId);
 
-    const friends = await getFriends(user.friendList);
+    const friends = await userClass.getUserFriends(user.friendList);
 
     const { passwordHash, email, ...userData } = user._doc;
 
@@ -112,9 +110,10 @@ export const loginWithToken = async (req, res) => {
 export const getOne = async (req, res) => {
   try {
     const id = req.params.id;
+    const userClass = new User(id);
     const user = await UserModel.findById(id);
 
-    const friends = await getFriends(user.friendList);
+    const friends = await userClass.getUserFriends(user.friendList);
 
     const { passwordHash, email, ...userData } = user._doc;
 
@@ -124,10 +123,8 @@ export const getOne = async (req, res) => {
       ...userData,
     });
   } catch (err) {
-    console.log(err)
-    res.status(500).json({
-      message: "Не удалось получить пользователя",
-    });
+    console.log(err);
+    handleError(res, "Не удалось получить пользователя")
   }
 };
 
@@ -137,22 +134,9 @@ export const toggleFriend = async (req, res) => {
     let currentUser = await UserModel.findById(req.userId);
     let friend = await UserModel.findById(req.params.id);
 
-    const isTheyFriend = () => {
-      const friendsField = currentUser.friendList;
+    const user = new User(req.userId);
 
-      let answer = true;
-      let index = 0;
-
-      while (answer && index < friendsField.length) {
-        if (friendsField[index]._id.toString() === req.params.id) {
-          answer = false;
-        }
-        index += 1;
-      }
-      return answer;
-    };
-
-    if (isTheyFriend()) {
+    if (user.isTheyFriend(currentUser.friendList, req.params.id)) {
       action = "Вы добавили этого человека в друзья";
       currentUser.friendList = [...currentUser.friendList, friend._id];
       friend.friendList = [...friend.friendList, currentUser._id];
@@ -175,9 +159,7 @@ export const toggleFriend = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "Не удалось добавить в друзья",
-    });
+    handleError(res, "Не удалось добавить в друзья")
   }
 };
 
@@ -193,9 +175,7 @@ export const changeStatus = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "Не удалось изменить статус",
-    });
+    handleError(res, "Не удалось изменить статус")
   }
 };
 
@@ -205,7 +185,7 @@ export const searchUser = async (req, res) => {
     
     if(searchName === undefined) {
       return res.json({
-        message: 'пусто пока'
+        message: ''
       })
     }
     
@@ -220,10 +200,8 @@ export const searchUser = async (req, res) => {
       users,
     })
   } catch (err) {
-    console.log(err)
-    res.status(500).json({
-      message: 'Не удалось совершить запрос на поиск'
-    })
+    console.log(err);
+    handleError(res, "Не удалось совершить запрос на поиск")
   }
 }
 

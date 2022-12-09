@@ -38,6 +38,11 @@ const userSchema = new mongoose.Schema(
       type: Array,
       required: false,
       default: [],
+    },
+    notifications: {
+      type: Array,
+      required: false,
+      default: []
     }
   },
   {

@@ -2,6 +2,8 @@ import PostModel from "../schemas/Post.js";
 import UserModel from "../schemas/User.js";
 import { PostController } from "./index.js";
 
+import { handleError } from "../utils/handleError.js";
+
 export const create = async (req, res) => {
   try {
     const doc = new PostModel({
@@ -20,9 +22,7 @@ export const create = async (req, res) => {
     res.json(post);
   } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "Не удалось создать статью",
-    });
+    handleError(res, "Не удалось создать статью")
   }
 };
 
@@ -70,9 +70,7 @@ export const remove = async (req, res) => {
     });
     } catch (err) {
     console.log(err);
-    res.status(500).json({
-      message: "Не удалось удалить статью",
-    });
+    handleError(res, "Не удалось удалить статью")
   }
 };
 
@@ -80,25 +78,28 @@ export const toggleLike = async (req, res) => {
   try {
     const userId = req.userId;
     const postId = req.params.id;
+    let action;
 
     const post = await PostModel.findById(postId);
   
     if(post.likes.includes(userId)) {
       post.likes = post.likes.filter(el => el !== userId);
+      action = 'set like';
       post.save();
     } else {
       post.likes.push(userId);
+      action = 'delete like';
       post.save();
     }
 
     res.json({
-      data: post.likes
+      data: post.likes,
+      action,
     })
 
   } catch (err) {
-    res.status(500).json({
-      message: 'Не удалось поставить/убрать лайк'
-    })
+    console.log(err);
+    handleError(res, "Не удалось поставить/убрать лайк")
   }
 }
 
@@ -118,10 +119,8 @@ export const getPost = async (req, res) => {
       fullName,
     })
   } catch (err) {
-    console.log(err)
-    res.status(500).json({
-      message: 'Не удалось получить пост с таким id'
-    })
+    console.log(err);
+    handleError(res, "Не удалось получить пост")
   }
 }
 
@@ -148,9 +147,8 @@ export const commentWrite = async (req, res) => {
       comments: post.comments
     })
   } catch (err) {
-    res.status(500).json({
-      message: 'Не удалось опубликовать комментарий'
-    })
+    console.log(err);
+    handleError(res, "Не удалось опубликовать комментарий")
   }
 }
 
@@ -161,9 +159,8 @@ export const commentDelete = async (req, res) => {
     const postId = req.params.id;
     const userId = req.userId;
   } catch (err) {
-    res.status(500).json({
-      message: 'Не удалось удалить комментарий'
-    })
+    console.log(err);
+    handleError(res, "Не удалось удалить комментарий")
   }
 }
 

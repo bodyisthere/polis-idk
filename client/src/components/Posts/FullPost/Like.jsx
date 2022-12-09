@@ -4,7 +4,9 @@ import { MyContext } from "../../../App.jsx";
 
 
 function Like( {postInfo, setPostInfo}) {
-    const { userInfo } = React.useContext(MyContext);
+    const { userInfo, like } = React.useContext(MyContext);
+
+    const [likeCondition, setLikeCondition] = React.useState(postInfo.post?.likes.includes(userInfo._id) ? 'delete like' : 'set like')
 
     const toggleLike = (url) => {
         fetch(`http://localhost:4444/post/${url}`, {
@@ -17,6 +19,7 @@ function Like( {postInfo, setPostInfo}) {
         .then(json => {
             const { avatarUrl, fullName } = postInfo;
             const { likes, ...post } = postInfo.post;
+            setLikeCondition(json.action)
             setPostInfo({
                 avatarUrl,
                 fullName,
@@ -26,6 +29,7 @@ function Like( {postInfo, setPostInfo}) {
                 }
             })
         })
+        like(userInfo._id, postInfo.post._id, likeCondition)
     }
 
     return (

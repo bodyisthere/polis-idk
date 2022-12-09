@@ -28,11 +28,11 @@ export function Pages() {
         :
             window.location.pathname.split('/')[2] === userInfo._id
             ?
-            <Page />
+            <Page/>
             :
             guest 
                 ? 
-                <GuestPage />
+                <GuestPage/>
                 :
                 error ? <NoUser /> : <div className="loader"></div>
     )

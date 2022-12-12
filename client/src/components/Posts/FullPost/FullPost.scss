@@ -2,7 +2,7 @@
     position: absolute;
     top: 0px;
     left: 0px;
-    z-index: 100;
+    z-index: 120;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -157,6 +157,7 @@
         cursor: pointer;
     }
 }
+
 
 @media (max-width: 768px) {
     .full-post {

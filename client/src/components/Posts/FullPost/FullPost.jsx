@@ -5,28 +5,19 @@ import './FullPost.scss'
 import Like from './Like.jsx'
 import Comment from './Comment';
 import AddNewComment from './AddNewComment.jsx';
-import FullPostSkeleton from './FullPostSkeleton.jsx';
 
-export function FullPost( { postInfo, setPostInfo, setIsPostOpen } ) {
-    const correctTime = () => {
-        const data = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря',]
-        const time = postInfo.post.createdAt.split('-');
+import convertDate from "../../../utils/converDate";
 
-        const regexp = new RegExp(/^\d{1,2}/,'gi');
-
-        time[1] = data[time[1]-1];
-        time[2] = time[2].match(regexp, ' ').join('');
-        time[3] = time[2];
-        time[2] = time[0];
-        time[0] = time[3] + '';
-        time.pop();
-        return time.join(" ")
-    }
-    
+export function FullPost( { postInfo, setPostInfo, setIsPostOpen, setIsPostFromOpen } ) {
     return (
         <div className="full-post">
             <div className="full-post__content">
-                <div className="full-post__close" onClick={() => setIsPostOpen(false)}>
+                <div className="full-post__close" onClick={() => {
+                    setIsPostOpen(false);
+                    if(setIsPostFromOpen) {
+                        setIsPostFromOpen(false)
+                    }
+                    }}>
                     <i className="fa-solid fa-xmark"></i>
                 </div>
                 {postInfo 
@@ -41,7 +32,7 @@ export function FullPost( { postInfo, setPostInfo, setIsPostOpen } ) {
                                 <img src={`http://localhost:4444/uploads/${postInfo.avatarUrl}`} alt={postInfo.post.title} />
                                 <div className="full-post__author-text">
                                     <div className="full-post__author-name">{postInfo.fullName}</div>
-                                    <div className="full-post__date">Опубликовано {correctTime()}</div>
+                                    <div className="full-post__date">Опубликовано {convertDate(postInfo.post.createdAt.split('-'))}</div>
                                 </div>
                             </div>
                             <div className="full-post__buttons">
@@ -59,7 +50,7 @@ export function FullPost( { postInfo, setPostInfo, setIsPostOpen } ) {
                     </div>
                 </> 
                 : 
-                <FullPostSkeleton />
+                'skeleton-fullpost'
                 }
             </div>
         </div>

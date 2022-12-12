@@ -1,13 +1,11 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
 import "./App.scss";
 
-import { Header, PopUp } from './components/index.js'
 import Navigation from "./navigation/Navigation";
-import { NotificationsPop } from "./pages/Notifications/NotificationsPop";
-
-import { io } from 'socket.io-client'
+import { Header, PopUp, FullPost, NotificationsPop } from "./components/index.js";
+import { getPostById, tokenAuth } from "./http/http.js";
+import { socketConnection } from "./socket/socket";
 
 export const MyContext = React.createContext("");
 
@@ -27,51 +25,41 @@ function App() {
 
   const [isLoading, setIsLoading] = React.useState(true);
 
-  const navigate = useNavigate();
-  const goTo = (id) => navigate(`/page/${id}`);
-
   React.useEffect(() => {
-    if (localStorage.getItem("token")) {
-      fetch("http://localhost:4444/auth/token", {
-        method: "post",
-        headers: { authorization: localStorage.getItem("token") },
-      })
-        .then((data) => data.json())
-        .then((json) => {
-          setUserInfo(json);
-          setIsLoading(false)
-        });
-      setIsAuth(true);
-    } else {
-      setIsAuth(false);
-      setIsLoading(false)
-    }
+    tokenAuth(setUserInfo, setIsLoading, setIsAuth);
+    socketConnection(isAuth, socket, setNotifications);
   }, []);
   
   const socket = React.useRef();
 
-  const like = (userId, postId, likeCondition) => {
-    socket.current.emit('like-send', userId, postId, likeCondition)
-  }
+  const [ isPostFromOpen, setIsPostFromOpen ] = React.useState(false);
 
-  React.useEffect(() => {
-    if(!isAuth && socket.current) return;
+  const [ postInfo, setPostInfo ] = React.useState()
 
-    socket.current = io('http://localhost:4444', {
-      auth: {authorization: localStorage.getItem('token')}
-    })
-
-    socket.current.on('liked!', (x) => {
-      setNotifications(prev => [...prev, x])
-    })
-
-  }, [])
+  const openPost = (id) => {
+    getPostById(id, setPostInfo)
+    setIsPostFromOpen(true);
+}
 
   return (
     <div className="App">
+      {isPostFromOpen ? <FullPost setIsPostFromOpen={setIsPostFromOpen} postInfo={postInfo} setPostInfo={setPostInfo} setIsPostOpen={setIsPostOpen}></FullPost> : ''}
       <NotificationsPop notifications={notifications} setNotifications={setNotifications}/>
       {isPopOpen ? <PopUp isPopOpen={isPopOpen} popMessage={popMessage}/> : ""}
-      <MyContext.Provider value={{ userInfo, setUserInfo, setIsPopOpen, guest, setGuest, isAuth, setIsAuth, isPostOpen, setIsPostOpen, currentPost, setCurrentPost, setPopMessage, like}}>
+
+      <MyContext.Provider value={
+        { 
+        userInfo, setUserInfo, 
+        setIsPopOpen, 
+        guest, setGuest, 
+        isAuth, setIsAuth, 
+        isPostOpen, setIsPostOpen, 
+        currentPost, setCurrentPost, 
+        setPopMessage, 
+        openPost, 
+        socket 
+        }}
+      >
         {isLoading 
         ?
           <div className="loader"></div>
@@ -81,7 +69,6 @@ function App() {
           <Navigation isAuth={isAuth}/>
         </>
         }
-        
       </MyContext.Provider>
     </div>
   );

@@ -205,6 +205,20 @@ export const searchUser = async (req, res) => {
   }
 }
 
+export const getNotifications = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await new User(userId).getById();
+    const notifications = user.notifications;
+    user.notifications = [];
+    // await user.save();
+    res.json(notifications)
+  } catch (err) {
+    console.log(err);
+    handleError(res, "Не удалось получить уведомления")
+  }
+}
+
 export const messages = async (req, res) => {
   res.status(200).json({
     success: true,

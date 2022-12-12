@@ -6,6 +6,7 @@ import "./Post.scss";
 import { FullPost } from "../FullPost/FullPost";
 import Like from "../FullPost/Like";
 import DeletePost from "./DeletePost";
+import { getPostById } from "../../../http/http.js";
 
 
 export function Post( { id } ) {
@@ -13,16 +14,14 @@ export function Post( { id } ) {
   const [isPostOpen, setIsPostOpen] = React.useState(false);
   const [showText, setShowText] = React.useState(true);
   const [postInfo, setPostInfo] = React.useState('')
+
   React.useEffect(() => {
-    fetch(`http://localhost:4444/post/${id}`)
-    .then(data => data.json())
-    .then(json => setPostInfo(json))
+    getPostById(id, setPostInfo)
   }, [])
   
   const openFullPost = () => {
-    setIsPostOpen(true)
+    setIsPostOpen(true);
   }
-  
   
   return (
     <div className="post">

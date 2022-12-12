@@ -44,6 +44,7 @@ app.post("/status-set", checkAuth, UserController.changeStatus);
 app.put("/friend/:id", checkAuth, UserController.toggleFriend);
 app.get("/page/:id", UserController.getOne);
 app.get("/friend-search", UserController.searchUser);
+app.get("/notifications", checkAuth, UserController.getNotifications)
 
 
 //universal methods

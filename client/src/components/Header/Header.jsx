@@ -7,6 +7,7 @@ import AvatarDrop from './AvatarDrop.jsx'
 import FriendSearch from "./FriendsSearch";
 import { MyContext } from "../../App";
 import logo from "../../assets/img/logo.png";
+import { Notifications } from "../Notifications/Notifications";
 
 export function Header() {
   const { userInfo, isAuth } = React.useContext(MyContext);
@@ -50,12 +51,7 @@ export function Header() {
                 <i className="fa-solid fa-envelope"></i>
               </Link>
             </li>
-            <li onClick={() => setActive(2)} className={`header__item ${active === 2 ? "header__item--active" : ""}`}>
-              <Link to="/notifications">
-                <i className="fa-solid fa-bell"></i>
-              </Link>
-              <span className="header__notifications-count">{userInfo.notifications.length}</span>
-            </li>
+            <Notifications></Notifications>
           </ul>
           {userInfo ? (
             <div className="header__drop">

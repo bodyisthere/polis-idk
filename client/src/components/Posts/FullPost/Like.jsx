@@ -2,40 +2,36 @@ import React from "react";
 
 import { MyContext } from "../../../App.jsx";
 
+import { like } from "../../../socket/socket.js";
+import { toggleLike } from "../../../http/http.js";
+
 
 function Like( {postInfo, setPostInfo}) {
-    const { userInfo, like } = React.useContext(MyContext);
+    const { userInfo, socket } = React.useContext(MyContext);
 
-    const [likeCondition, setLikeCondition] = React.useState(postInfo.post?.likes.includes(userInfo._id) ? 'delete like' : 'set like')
+    const [likeCondition, setLikeCondition] = React.useState('');
+    const [userId, setUserId] = React.useState('')
 
-    const toggleLike = (url) => {
-        fetch(`http://localhost:4444/post/${url}`, {
-            method: 'put',
-            headers: {
-                authorization: `${localStorage.getItem("token")}`,
-            }
-        })
-        .then(data => data.json())
-        .then(json => {
-            const { avatarUrl, fullName } = postInfo;
-            const { likes, ...post } = postInfo.post;
-            setLikeCondition(json.action)
-            setPostInfo({
-                avatarUrl,
-                fullName,
-                post: {
-                    ...post,
-                    likes: json.data,
-                }
-            })
-        })
-        like(userInfo._id, postInfo.post._id, likeCondition)
+    React.useEffect(() => {
+        if(!userInfo) return
+        setLikeCondition(postInfo.post?.likes.includes(userInfo._id) ? 'delete like' : 'set like' );
+        setUserId(userInfo._id)
+    }, [userInfo])
+
+    const toggleLikeE = (id, socket) => {
+        toggleLike(id, postInfo, setLikeCondition, setPostInfo)
+        like(id, likeCondition, socket)
     }
+
 
     return (
         <div className="full-post__button">
-            <i className={`fa-regular fa-heart ${postInfo.post?.likes.includes(userInfo._id) ? 'post__button-clicked' : ''}`} onClick={() => toggleLike(postInfo.post._id)}></i>
-            <span>{postInfo.post.likes.length}</span>
+            <i 
+                className={`fa-regular fa-heart ${postInfo.post?.likes.includes(userId) ? 'post__button-clicked' : ''}`} 
+                onClick={() => toggleLikeE(postInfo.post._id, socket)}></i>
+            <span>
+                {postInfo.post.likes.length}
+            </span>
         </div>
     )
 }

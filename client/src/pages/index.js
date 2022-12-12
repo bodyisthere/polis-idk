@@ -1,5 +1,5 @@
 export { Page } from './Page/Page.jsx';
-export { Notifications } from './Notifications/Notifications.jsx';
+export { Notifications } from '../components/Notifications/Notifications.jsx';
 export { NoFound } from './NoFound/NoFound.jsx';
 export { News } from './News/News.jsx';
 export { NewPost } from './NewPost/NewPost.jsx';

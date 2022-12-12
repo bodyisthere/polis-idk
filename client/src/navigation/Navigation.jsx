@@ -11,7 +11,6 @@ function Navigation( { isAuth} ) {
           <Route path="/page/:id" element={<Pages/>}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/messages" element={<Messages />}></Route>
-          <Route path="/notifications" element={<Notifications />}></Route>
           <Route path="/new-post" element={<NewPost />}></Route>
           <Route path="/all-friends/:id" element={<AllFriendsCheck />}></Route>
           <Route path="/conversation/:id" element={<Conversation />}></Route>

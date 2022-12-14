@@ -1,14 +1,19 @@
-import avatar from '../../assets/img/avatar.jpg'
+import { Link } from 'react-router-dom';
 
-function Message() {
+function Message( {members, _id} ) {
+
+    const index = members.indexOf(null) === 0 ? 1 : 0;
+
     return (
-        <div className="message">
-            <img src={avatar} alt="" className="message__avatar" />
-            <div className="message__text">
-                <div className="message__name">Sasha Ivanov</div>
-                <div className="message__inner">Hello! How are you?</div>
+        <Link to={`/conversation/${_id}`}>
+            <div className="message">
+                <img src={`http://localhost:4444/uploads/${members[index].avatarUrl}`} alt={members[index].fullName} className="message__avatar" />
+                <div className="message__text">
+                    <div className="message__name">{members[index].fullName}</div>
+                    <div className="message__inner">...</div>
+                </div>
             </div>
-        </div>
+        </Link>
     )
 }
 

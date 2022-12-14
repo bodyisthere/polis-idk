@@ -7,7 +7,7 @@ import { instrument } from "@socket.io/admin-ui";
 
 
 //inner methods
-import { UserController, PostController, Universal } from "./controllers/index.js";
+import { UserController, PostController, Universal, MessageController } from "./controllers/index.js";
 import { registrationValidation, loginValidation, postCreateValidation} from "./validations/validations.js";
 import handleValidationErrors from "./validations/handleValidationErrors.js";
 import checkAuth from "./utils/checkAuth.js";
@@ -59,6 +59,12 @@ app.get('/post/:id', PostController.getPost);
 app.put('/post/:id', checkAuth, PostController.toggleLike);
 app.post('/post/:id', checkAuth, PostController.commentWrite);
 app.delete('/post/:id', checkAuth, PostController.commentDelete);
+
+
+app.post('/conversation/:guestId', checkAuth, MessageController.createDialogue);
+app.get('/conversation/:id', checkAuth, MessageController.getDialogue);
+app.delete('/conversation/:id', checkAuth, MessageController.deleteDialogue);
+app.get('/conversation', checkAuth, MessageController.getAllDialogues);
 
 
 //server start

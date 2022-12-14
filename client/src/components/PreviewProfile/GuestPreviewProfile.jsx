@@ -10,15 +10,12 @@ function GuestPreviewProfile() {
     const { guest, setIsPopOpen, setPopMessage, userInfo, setGuest, socket } = React.useContext(MyContext);
 
     const [inActive, setInActive] = React.useState('');
-    const [friendText, setFriendText] = React.useState('')
-
-    React.useEffect(() => {
-      isTheyFriend(userInfo, guest, setFriendText)
-    }, [guest])
-
+    const [isFriend, setIsFriend] = React.useState(() => isTheyFriend(userInfo, guest));
+    
     const friendActions = () => {
       toggleFriend({ setInActive, guest, setIsPopOpen, userInfo, setGuest, setPopMessage });
-      toggleFriendSocket(guest._id, 'add', socket)
+      toggleFriendSocket(guest._id, isFriend ? 'delete' : 'add', socket);
+      setIsFriend(!isFriend);
     }
 
     return (
@@ -39,7 +36,7 @@ function GuestPreviewProfile() {
             <div className="preview-profile__info-field">Посты <span>{guest.posts.length}</span></div>
           </div>
           <div className="preview-profile__buttons">
-            <button className={`preview-profile__my-page`} disabled={inActive} onClick={friendActions}>{friendText}</button>
+            <button className='preview-profile__my-page' disabled={inActive} onClick={friendActions}>{isFriend ? 'Удалить из друзей' : 'Добавить в друзья'}</button>
             <Link to={`/conversation/${guest._id}`} className="preview-profile__send-message">Отправить сообщение</Link>
           </div>
         </div>

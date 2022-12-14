@@ -9,3 +9,10 @@
         font-size: 35px;
     }
 }
+
+@media (max-width: 1024px) {
+    .posts {
+        max-width: auto;
+        min-width: auto;
+    }
+}

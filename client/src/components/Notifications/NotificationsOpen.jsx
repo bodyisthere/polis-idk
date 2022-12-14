@@ -1,5 +1,6 @@
 import React from "react"
 import { MyContext } from "../../App.jsx";
+import { Link } from "react-router-dom";
 
     
 export default function NotificationsOpen() {
@@ -28,6 +29,17 @@ export default function NotificationsOpen() {
                         ?
                         notifications.map((el, index) => {
                             return (
+                                el.action === 'add-friend' 
+                                ?
+                                <Link to={`/page/${el.id}`} key={index}>
+                                    <li className="notifications__item" key={index}>
+                                        <img src={`http://localhost:4444/uploads/${el.avatar}`} alt={el.fullName} className="notifications__avatar"></img>
+                                        <div className="notifications__text">
+                                            {el.fullName} добавил вас в друзья
+                                        </div>
+                                    </li>
+                                </Link>
+                                :
                                 <li className="notifications__item" key={index} onClick={() => openPost(el.post)}>
                                     <img src={`http://localhost:4444/uploads/${el.avatar}`} alt={el.fullName} className="notifications__avatar"></img>
                                     <div className="notifications__text">

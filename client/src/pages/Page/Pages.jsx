@@ -16,6 +16,7 @@ export function Pages() {
     React.useEffect(() => {
         if(window.location.pathname.split('/')[2] !== userInfo._id) {
             getPageInfo(setGuest, setIsPopOpen, setPopMessage, setError, setIsLoading);
+            console.log(guest)
         } else {
             setIsLoading(false);
         }

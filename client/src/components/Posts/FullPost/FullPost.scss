@@ -22,13 +22,13 @@
         max-width: 50vw;
         height: 90vh;
         border-radius: 15px 0px 0px 15px;
-        object-fit: contain;
+        object-fit: cover;
         background: #1b2730;
         img {
             max-width: 100%;
             height: 100%;
             border-radius: 15px 0px 0px 15px;
-            object-fit: contain;
+            object-fit: cover;
         }
     }
     &__text {
@@ -161,6 +161,22 @@
 
 @media (max-width: 768px) {
     .full-post {
-        
+        &__content {
+            flex-direction: column;
+        }
+        &__img {
+            border-radius: 15px 15px 0px 0px;
+            width: 100%;
+            max-width: none;
+            img {
+                width: 100%;
+                border-radius: 15px 15px 0px 0px;
+                object-fit: cover;
+            }
+        }
+        &__text {
+            width: 100%;
+            border-radius: 0px 0px 15px 15px;
+        }
     }
 }

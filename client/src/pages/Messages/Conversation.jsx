@@ -18,46 +18,9 @@ export function Conversation() {
     const navigate = useNavigate();
     const goTo = () => navigate(`/`);
 
-    const send = () => {
-        const date = new Date();
-        if(!msg) return
-        socket.current.send(JSON.stringify({
-            message: msg,
-            author: userInfo.fullName,
-            time: date.toLocaleTimeString()
-        }))
-        setMsg("");
-    }
+    React.useEffect(() => {
 
-    // React.useEffect(() => {
-    //     async function fetchData() {
-    //         const info = await guest ? setIsLoading(false) : getPageInfo(setGuest, setIsPopOpen, setPopMessage, '', setIsLoading);
-    //         if(userInfo && guest && !socket.current?.url) {
-    //             socket.current = new WebSocket(`ws://localhost:3001?${userInfo._id}&with=${guest._id}`);
-
-    //             socket.current.onopen = () => {
-    //                 setIsConnected(true);
-    //             }
-
-    //             socket.current.onmessage = (message) => {
-    //                 const current = JSON.parse(message.data);
-    //                 setMessages(prev => [...prev, current]);
-    //             }
-
-    //             socket.current.onclose = (code, reason) => {
-    //                 setIsConnected(false);
-    //             }
-                
-    //             socket.current.onerror = (error) => {
-    //                 setIsConnected(false);
-    //                 console.log(error);
-    //             }
-    //         }
-    //     }
-    //     fetchData()
-    // }, [])
-
-    console.log(messages)
+    }, [])
 
     return (
         isLoading 
@@ -76,7 +39,7 @@ export function Conversation() {
                 </div>
                 <div className="conversation__form">
                     <textarea type="text" placeholder="Введите сообщение" value={msg} onChange={((e) => setMsg(e.target.value))}/>
-                    <button className="conversation__send" onClick={send}><i className="fa-regular fa-paper-plane"></i></button>
+                    <button className="conversation__send"><i className="fa-regular fa-paper-plane"></i></button>
                 </div>
             </div>
         </div>

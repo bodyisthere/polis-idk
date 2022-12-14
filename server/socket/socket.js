@@ -31,6 +31,8 @@ export function createSocketIO(server) {
             socket.on('like-send', (pId, likeCondition) => SocketController.likeSend(io, user, pId, likeCondition))
 
             socket.on('friend-add', (friendId, action) => SocketController.toggleFriend(io, user, friendId, action))
+
+            socket.on('send-message', (message, friendId, action) => SocketController.sendMessage(io, user, message, friendId, action ))
         })
           
     

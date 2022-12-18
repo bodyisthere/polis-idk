@@ -1,16 +1,21 @@
 import React from "react";
 
 import { MyContext } from "../../../App";
-
-import { deletePost } from "../../../http/http";
+import { PostController } from "../../../controllers";
 
 function DeletePost( {postInfo} ) {
     const { userInfo, setPopMessage, setIsPopOpen, setUserInfo } = React.useContext(MyContext);
 
-    const id = postInfo.post._id;
+    
+    const onClick = () => {
+        const id = postInfo.post._id;
+        PostController.deletePost(id, setPopMessage, setIsPopOpen, userInfo, setUserInfo)
+    }
 
     return (
-        <button className="post__button" title="Удалить пост" onClick={() => deletePost(id, setPopMessage, setIsPopOpen, userInfo, setUserInfo)}><i className="fa-solid fa-trash"></i></button>
+        <button className="post__button" title="Удалить пост" onClick={onClick}>
+            <i className="fa-solid fa-trash"></i>
+        </button>
     )
 }
 

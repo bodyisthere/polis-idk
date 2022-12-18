@@ -1,19 +1,19 @@
-import './Messages.scss'
-import { getAllMessages } from '../../http/http'
-
-import Message from './Message.jsx'
 import React from 'react'
+
+import './Messages.scss'
+
+import { getAllMessages } from '../../socket/socket'
+// import { getAllMessages } from '../../http/http'
+import Message from './Message.jsx'
+import { MyContext } from '../../App.jsx'
 
 export function Messages() {
 
-  const [messages, setMessages] = React.useState('')
+  const { socket, messages, setMessages } = React.useContext(MyContext)
 
   React.useEffect(() => {
-    getAllMessages(setMessages);
+    getAllMessages(socket);
   }, [])
-
-  console.log(messages);
-
 
   return (
     <div className="messages">
@@ -24,8 +24,7 @@ export function Messages() {
             messages 
             ?
               messages.map((el, index) => {
-                console.log(el)
-                return <Message {...el} key={index}/>
+                return <Message id={el} key={index}/>
               })
             : 
             ''

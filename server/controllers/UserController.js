@@ -211,7 +211,7 @@ export const getNotifications = async (req, res) => {
     const user = await new User(userId).getById();
     const notifications = user.notifications;
     user.notifications = [];
-    // await user.save();
+    await user.save();
     res.json(notifications)
   } catch (err) {
     console.log(err);

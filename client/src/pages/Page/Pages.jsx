@@ -4,7 +4,7 @@ import { MyContext } from "../../App.jsx"
 import { GuestPage, Page } from "../index.js"
 import NoUser from "./NoUser.jsx";
 
-import { getPageInfo } from "../../utils/getPageInfo.js";
+import { UserController } from "../../controllers/index.js";
 
 
 export function Pages() {
@@ -14,9 +14,9 @@ export function Pages() {
     const [error, setError] = React.useState(false);
 
     React.useEffect(() => {
-        if(window.location.pathname.split('/')[2] !== userInfo._id) {
-            getPageInfo(setGuest, setIsPopOpen, setPopMessage, setError, setIsLoading);
-            console.log(guest)
+        const idURL = window.location.pathname.split('/')[2];
+        if(idURL !== userInfo._id) {
+            UserController.getPageInfo(idURL, setGuest, setIsLoading, setError);
         } else {
             setIsLoading(false);
         }

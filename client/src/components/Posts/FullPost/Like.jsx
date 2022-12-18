@@ -1,9 +1,7 @@
 import React from "react";
 
 import { MyContext } from "../../../App.jsx";
-
-import { like } from "../../../socket/socket.js";
-import { toggleLike } from "../../../http/http.js";
+import { PostController, SocketController } from "../../../controllers/index.js";
 
 
 function Like( {postInfo, setPostInfo}) {
@@ -15,12 +13,12 @@ function Like( {postInfo, setPostInfo}) {
     React.useEffect(() => {
         if(!userInfo) return
         setLikeCondition(postInfo.post?.likes.includes(userInfo._id) ? 'delete like' : 'set like' );
-        setUserId(userInfo._id)
+        setUserId(userInfo._id);
     }, [userInfo])
 
-    const toggleLikeE = (id, socket) => {
-        toggleLike(id, postInfo, setLikeCondition, setPostInfo)
-        like(id, likeCondition, socket)
+    const toggleLike = (id, socket) => {
+        PostController.toggleLike(id, postInfo, setLikeCondition, setPostInfo);
+        SocketController.like(id, likeCondition, socket);
     }
 
 
@@ -28,7 +26,7 @@ function Like( {postInfo, setPostInfo}) {
         <div className="full-post__button">
             <i 
                 className={`fa-regular fa-heart ${postInfo.post?.likes.includes(userId) ? 'post__button-clicked' : ''}`} 
-                onClick={() => toggleLikeE(postInfo.post._id, socket)}></i>
+                onClick={() => toggleLike(postInfo.post._id, socket)}></i>
             <span>
                 {postInfo.post.likes.length}
             </span>

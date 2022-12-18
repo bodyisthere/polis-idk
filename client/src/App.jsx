@@ -4,8 +4,9 @@ import "./App.scss";
 
 import Navigation from "./navigation/Navigation";
 import { Header, PopUp, FullPost, NotificationsPop } from "./components/index.js";
-import { getPostById, tokenAuth } from "./http/http.js";
-import { socketConnection } from "./socket/socket";
+import { getPostById } from "./http/http.js";
+
+import { UserController, PostController, SocketController } from './controllers/index.js'
 
 export const MyContext = React.createContext("");
 
@@ -24,10 +25,13 @@ function App() {
   const [currentPost, setCurrentPost] = React.useState('');
 
   const [isLoading, setIsLoading] = React.useState(true);
+  
+  const [ isConnected, setIsConnected ] = React.useState(false);
+  const [messages, setMessages] = React.useState('')
 
   React.useEffect(() => {
-    tokenAuth(setUserInfo, setIsLoading, setIsAuth);
-    socketConnection(isAuth, socket, setNotifications);
+    UserController.tokenAuth(setUserInfo, setIsAuth, setIsLoading);
+    SocketController.connection(isAuth, socket, setNotifications, setIsConnected, setMessages)
   }, []);
   
   const socket = React.useRef();
@@ -37,7 +41,7 @@ function App() {
   const [ postInfo, setPostInfo ] = React.useState()
 
   const openPost = (id) => {
-    getPostById(id, setPostInfo)
+    PostController.getPostById(id, setPostInfo);
     setIsPostFromOpen(true);
 }
 
@@ -46,7 +50,6 @@ function App() {
       {isPostFromOpen ? <FullPost setIsPostFromOpen={setIsPostFromOpen} postInfo={postInfo} setPostInfo={setPostInfo} setIsPostOpen={setIsPostOpen}></FullPost> : ''}
       <NotificationsPop notifications={notifications} setNotifications={setNotifications}/>
       {isPopOpen ? <PopUp isPopOpen={isPopOpen} popMessage={popMessage}/> : ""}
-
       <MyContext.Provider value={
         { 
         userInfo, setUserInfo, 
@@ -57,7 +60,9 @@ function App() {
         currentPost, setCurrentPost, 
         setPopMessage, 
         openPost, 
-        socket 
+        socket,
+        isConnected, setIsConnected,
+        messages, setMessages,
         }}
       >
         {isLoading 

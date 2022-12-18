@@ -1,7 +1,7 @@
 import React from "react";
 
-import { MyContext } from "../../App";
-import { changeStatus } from "../../http/http";
+import { MyContext } from "../../../App";
+import { UserController } from "../../../controllers";
 
 function MyStatus() {
   const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
@@ -22,7 +22,7 @@ function MyStatus() {
         />
         <button 
           className="preview-profile__status-submit" 
-          onClick={() => changeStatus(statusText, setPopMessage, setIsPopOpen, setStatusChange, userInfo, setUserInfo, setStatusText)}>
+          onClick={() => UserController.changeStatus(statusText, setPopMessage, setIsPopOpen, setStatusChange, userInfo, setUserInfo, setStatusText)}>
             <i className="fa-regular fa-circle-check"></i>
         </button>
       </>

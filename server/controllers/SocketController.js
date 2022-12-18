@@ -1,6 +1,7 @@
 import PostModel from '../schemas/Post.js'
 import { User } from '../Classes/ClassUser.js'
 import UserModel from "../schemas/User.js";
+import ConversationModel from '../schemas/Conversation.js';
 
 const isUserOnline = async (io, searchId) => {
     let isOnline = false;
@@ -19,7 +20,6 @@ const isUserOnline = async (io, searchId) => {
         idDB,
     }
 }
-
 
 export async function likeSend(io, user, pId, likeCondition) {
     try {
@@ -96,12 +96,40 @@ export async function toggleFriend(io, user, friendId, action) {
     }
 }
 
-export async function sendMessage(io, user, message, friendId, action) {
+export async function getAllMessages(io, user) {
     try {
-        const friend = await UserModel.findById(friendId);
-        console.log(io.socket.sockets)
+        io.sockets.sockets.forEach(el => {
+            if(el.userId === user._id.toString()) {
+                io.to(el.id).emit('send-all-messages', user.messages);
+            }
+        })
+    } catch (err) {
+       console.log(err) 
+    }
+}
+
+export async function getOneDialogue(io, user, conversationId) {
+    try {
+        const dialogue = await ConversationModel.findById(conversationId);
+        
+        let { members, ...other } = dialogue._doc;
+
+        members = await Promise.all(members.map(async el => {
+            return await UserModel.findById(el, {
+                fullName: 1, _id: 1, avatarUrl: 1
+            })
+        }))
+
+        io.sockets.sockets.forEach(el => {
+            if(dialogue._doc.members.includes(el.userId)) {
+                io.to(el.id).emit('recieve-one-dialogue', {
+                    ...other, 
+                    members
+                })
+            }
+        })
 
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
 }

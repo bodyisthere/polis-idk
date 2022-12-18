@@ -2,22 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 
 import './FriendSearch.scss'
+import { UserController } from '../../controllers/index.js';
+
 
 function FriendSearch( { searchValue, setOpenSearch, rootElFirst } ) {
     const [foundPeople, setFoundPeople] = React.useState('');
 
-    const searchPeople = async () => {
-        if(!searchValue) {
-            return
-        }
-
-        const res = await fetch(`http://localhost:4444/friend-search?name=${searchValue}`)
-        const resJson = await res.json()
-        setFoundPeople(resJson.users);
-    }
-
     React.useEffect(() => {
-        searchPeople()
+        UserController.getByName(searchValue, setFoundPeople)
     }, [searchValue])
 
 

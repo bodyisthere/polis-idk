@@ -1,4 +1,4 @@
-import GuestPreviewProfile from "../../components/PreviewProfile/GuestPreviewProfile"
+import GuestPreviewProfile from "../../components/PreviewProfile/GuestPreviewProfile/GuestPreviewProfile"
 import { GuestFriendsList } from "../../components/FriendsList/GuestFriendsList"
 import { Posts, Suggestions } from "../../components"
 

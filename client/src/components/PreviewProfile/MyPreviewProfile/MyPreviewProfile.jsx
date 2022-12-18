@@ -1,36 +1,20 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import './PreviewProfile.scss'
+import '../PreviewProfile.scss'
 
-import { MyContext } from "../../App";
-import MyStatus from "./MyStatus";
-import { handleChangeAvatar } from "../../http/http";
+import { MyContext } from "../../../App";
+import MyStatus from "./MyStatus.jsx";
+import { MyAvatar } from "./MyAvatar";
 
 export function MyPreviewProfile() {
-    const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
-
-    const inputFileRef = React.useRef(null);
+    const { userInfo } = React.useContext(MyContext);
 
     return (
         <div className="preview-profile">
           <div className="preview-profile__background">
             <img src={`http://localhost:4444/uploads/${userInfo.avatarUrl}`} alt={userInfo.fullName}/>
-            <div className="preview-profile__background-change">
-              <input 
-                type="file" 
-                name="image" 
-                className="preview-profile__file-upload" 
-                accept="image/jpeg,image/png" 
-                onChange={(e) => handleChangeAvatar(e, setPopMessage, setIsPopOpen, userInfo, setUserInfo)} 
-                ref={inputFileRef} 
-                hidden />
-              <i 
-                title="Изменить аватар" 
-                className="fa-solid fa-pen" 
-                onClick={() => inputFileRef.current.click()}>
-              </i>
-            </div>
+            <MyAvatar />
           </div>
           <div className="preview-profile__avatar">
             <img src={`http://localhost:4444/uploads/${userInfo.avatarUrl}`} alt={userInfo.fullName}/>

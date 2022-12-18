@@ -1,5 +1,6 @@
-export async function getPageInfo(client, setPop, setPopMessage, setError, setIsLoading) {
+export async function getPageInfo(client, setPop, setPopMessage, setError, setIsLoading, action) {
     const res = await fetch(`http://localhost:4444/page/${window.location.pathname.split('/')[2]}`);
+    
     if(!res.ok) {
         const json = await res.json();
         setPop('declined');

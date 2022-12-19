@@ -8,7 +8,7 @@ import { UserController } from "../../controllers/index.js";
 
 
 export function Pages() {
-    const { userInfo, setGuest, guest, setIsPopOpen, setPopMessage } = React.useContext(MyContext)
+    const { userInfo, setGuest, guest } = React.useContext(MyContext)
     
     const [ isLoading, setIsLoading ] = React.useState(true);
     const [error, setError] = React.useState(false);

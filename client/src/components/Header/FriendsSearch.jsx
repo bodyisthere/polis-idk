@@ -12,7 +12,6 @@ function FriendSearch( { searchValue, setOpenSearch, rootElFirst } ) {
         UserController.getByName(searchValue, setFoundPeople)
     }, [searchValue])
 
-
     const rootElSecond = React.useRef(null);
    
     React.useEffect(() => {

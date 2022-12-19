@@ -36,6 +36,22 @@ export async function toggleFriend(res, setIsPopOpen, guest, setGuest, user, set
     setTimeout(() => setIsPopOpen(false), 5000);
 }
 
+export async function toggleFriendFromList(res, id, setIsPopOpen, setPopMessage, userInfo, setUserInfo) {
+    if(!res.ok) {
+            const json = await res.json();
+            setPopMessage(json?.message ? json.message : 'Не удалось');
+            setIsPopOpen('declined');
+            return setTimeout(() => setIsPopOpen(false), 5000)
+        }
+
+        let {friendList, ...other} = userInfo;
+        friendList = friendList.filter(el => el._id !== id)
+        setUserInfo({friendList, ...other})
+        
+        setIsPopOpen('success');
+        return setTimeout(() => setIsPopOpen(false), 5000)
+}
+
 export async function changeAvatar(res, setPopMessage, setIsPopOpen, userInfo, setUserInfo) {
     if(!res.ok) {
         const json = await res.json()
@@ -87,11 +103,27 @@ export async function getByName(res, setFoundPeople) {
     setFoundPeople(response.users);
 }
 
-export async function getPageInfo(res, setGuest, setError) {
+export async function getPageInfo(res, setGuest, setError, setIsLoading) {
     if (!res.ok) {
         console.log('Не удалось получить пользователя')
         return setError(true)
     }
     const json = await res.json();
     setGuest(json);
+    setIsLoading(false)
+}
+
+export async function auth(res, setUserInfo, setIsAuth, setError, goTo) {
+    const response = await res.json();
+
+    if (!res.ok) {
+        setError(response);
+        throw new Error(`${res.statusText}`);
+      }
+  
+    setUserInfo(response);
+    setIsAuth(true);
+    localStorage.setItem("token", response.token);
+    setError("");
+    return response._id ? goTo(`/page/${response._id}`) : ''
 }

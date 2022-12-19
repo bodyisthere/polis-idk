@@ -1,5 +1,4 @@
 import React from "react";
-import { MyContext } from "../../App";
 
 function Registration({
   email,
@@ -14,7 +13,6 @@ function Registration({
   setFullName,
   authSubmit,
 }) {
-  const { userInfo, setUserInfo } = React.useContext(MyContext);
 
   return (
     <>

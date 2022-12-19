@@ -37,13 +37,25 @@ export async function changeStatusReq(statusText) {
 }
 
 export async function getNotificationsReq() {
-    return await fetch('http://localhost:4444/notifications', GET_HEADER)
+    return await fetch(`${MAIN_URL}/notifications`, GET_HEADER)
 }
 
 export async function getByNameReq(searchValue) {
-    return await fetch(`http://localhost:4444/friend-search?name=${searchValue}`)
+    return await fetch(`${MAIN_URL}/friend-search?name=${searchValue}`)
 }
 
 export async function getPageReq(id) {
-    return await fetch(`http://localhost:4444/page/${id}`)
+    return await fetch(`${MAIN_URL}/page/${id}`)
+}
+
+export async function authReq(URL, body) {
+    return await fetch(URL, {
+        method: "post",
+        body: JSON.stringify(body),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          authorization: `${localStorage.getItem("token")}`,
+        },
+    })
 }

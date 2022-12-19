@@ -7,10 +7,12 @@ import AllGuestFriends from "./AllGuestFriends.jsx"
 import AllMyFriends from "./AllMyFriends"
 
 export function AllFriendsCheck() {
-    const { userInfo } = React.useContext( MyContext )
+    const { userInfo } = React.useContext( MyContext );
+
+    const id = window.location.pathname.split('/')[2];
 
     return (
-        window.location.pathname.split('/')[2] === userInfo._id
+        id === userInfo._id
         ?
         <AllMyFriends/>
         : 

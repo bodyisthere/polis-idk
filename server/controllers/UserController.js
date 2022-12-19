@@ -5,6 +5,7 @@ import UserModel from "../schemas/User.js";
 import { User } from "../Classes/ClassUser.js";
 import { handleError } from '../utils/handleError.js'
 
+//ready
 export const registration = async (req, res) => {
   try {
     const isUnique = await UserModel.findOne({ email: req.body.email });
@@ -45,6 +46,7 @@ export const registration = async (req, res) => {
   }
 };
 
+//ready
 export const login = async (req, res) => {
   try {
     const user = await UserModel.findOne({ email: req.body.email });
@@ -84,6 +86,7 @@ export const login = async (req, res) => {
   }
 };
 
+//ready
 export const loginWithToken = async (req, res) => {
   try {
     const userId = req.userId;
@@ -107,6 +110,7 @@ export const loginWithToken = async (req, res) => {
   }
 };
 
+//ready
 export const getOne = async (req, res) => {
   try {
     const id = req.params.id;
@@ -218,11 +222,4 @@ export const getNotifications = async (req, res) => {
     handleError(res, "Не удалось получить уведомления")
   }
 }
-
-export const messages = async (req, res) => {
-  res.status(200).json({
-    success: true,
-  })
-}
-
 

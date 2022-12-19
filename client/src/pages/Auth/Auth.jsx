@@ -6,6 +6,7 @@ import "./Auth.scss";
 import Login from "./Login.jsx";
 import Registration from "./Registration.jsx";
 import { MyContext } from "../../App";
+import { UserController } from "../../controllers";
 
 export function Auth({ isAuth }) {
   const { setUserInfo, userInfo, setIsAuth } = React.useContext(MyContext);
@@ -24,45 +25,24 @@ export function Auth({ isAuth }) {
     if (isAuth) {
       goTo(`/page/${userInfo._id}`);
     }
+  }, [])
+
+  React.useEffect(() => {
+    if (isAuth) {
+      goTo(`/page/${userInfo._id}`);
+    }
     setBody({
       fullName,
       email,
       password,
     });
   }, [email, password, fullName]);
-
-  React.useEffect(() => {
-    if (isAuth) {
-      goTo(`/page/${userInfo._id}`);
-    }
-  }, [])
   
-
   const navigate = useNavigate();
 
   const authSubmit = async (URL) => {
-    const res = await fetch(URL, {
-      method: "post",
-      body: JSON.stringify(body),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        authorization: `${localStorage.getItem("token")}`,
-      },
-    });
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err);
-      throw new Error(`${res.statusText}`);
-    }
-
-    const info = await res.json();
-    setUserInfo(info);
-    setIsAuth(true);
-    localStorage.setItem("token", info.token);
-    setError("");
-    return info._id ? goTo(`/page/${info._id}`) : ''
-  };
+    UserController.auth(URL, body, setUserInfo, setIsAuth, setError, goTo);
+  }
 
   return (
     <div className="auth">

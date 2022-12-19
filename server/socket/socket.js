@@ -37,6 +37,7 @@ export function createSocketIO(server) {
             socket.on('get-all-messages', () => SocketController.getAllMessages(io, user))
 
             socket.on('get-one-dialogue', (conversationId) => SocketController.getOneDialogue(io, user, conversationId))
+
         })
           
     

@@ -51,7 +51,7 @@ export function Header() {
                 <i className="fa-solid fa-envelope"></i>
               </Link>
             </li>
-            <Notifications></Notifications>
+           <Notifications></Notifications>
           </ul>
           {userInfo ? (
             <div className="header__drop">

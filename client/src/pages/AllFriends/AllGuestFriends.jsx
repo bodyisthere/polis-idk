@@ -1,6 +1,7 @@
 import React from "react"
 
 import { MyContext } from "../../App";
+import { UserController } from "../../controllers";
 import AllFriendCard from "./AllFriendCard";
 
 function AllGuestFriends() {
@@ -10,20 +11,8 @@ function AllGuestFriends() {
     const [isLoading, setIsLoading] = React.useState(true);
 
     React.useEffect(() => {
-        fetch(`http://localhost:4444/page/${window.location.pathname.split('/')[2]}`)
-        .then(data => {
-            if(!data.ok) {
-                throw new Error('Пользователь не найден')
-            }
-            return data.json()
-        })
-        .then(json => {
-            setGuest(json); 
-            setIsLoading(false);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        const id = window.location.pathname.split('/')[2];
+        UserController.getPageInfo(id, setGuest, setIsLoading)
     }, [])
 
     return (

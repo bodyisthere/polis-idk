@@ -1,5 +1,4 @@
 import PostModel from '../schemas/Post.js'
-import { User } from '../Classes/ClassUser.js'
 import UserModel from "../schemas/User.js";
 import ConversationModel from '../schemas/Conversation.js';
 
@@ -24,7 +23,7 @@ const isUserOnline = async (io, searchId) => {
 export async function likeSend(io, user, pId, likeCondition) {
     try {
     const post = await PostModel.findById(pId);
-    const author = await new User(post.author).getById();
+    const author = await UserModel.findById(post.author);
     const { isOnline, id, idDB} = await isUserOnline(io, post.author)
     //{isOnline: true/false, id: ..., idDB: ...}
 

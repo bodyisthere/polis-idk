@@ -4,12 +4,12 @@ import { MyContext } from "../../../App";
 import { UserController } from "../../../controllers";
 
 export function MyAvatar() {
-    const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
+    const { userInfo, setUserInfo, setIsPopOpen } = React.useContext(MyContext);
 
     const inputFileRef = React.useRef(null);
 
     const onChange = (e) => {
-        UserController.changeAvatar(e, setPopMessage, setIsPopOpen, userInfo, setUserInfo)
+        UserController.changeAvatar(e, setIsPopOpen, userInfo, setUserInfo)
     }
 
     return (

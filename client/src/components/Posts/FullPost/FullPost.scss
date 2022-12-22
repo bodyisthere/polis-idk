@@ -94,6 +94,7 @@
     &__comment {
         display: flex;
         align-items: center;
+        justify-content: space-between;
         margin-bottom: 10px;
     }
     &__comment-avatar {
@@ -116,6 +117,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        flex-grow: 1;
         text-align: left;
     }
     &__comment-author {
@@ -124,6 +126,24 @@
     }
     &__add-comment {
         position: relative;
+    }
+    &__comment-buttons {
+        display: flex;
+        flex-direction: column;
+    }
+    &__comment-delete {
+        background: transparent;
+        color: white;
+        &:hover {
+            color: red;
+        }
+    }
+    &__comment-edit {
+        background: transparent;
+        color: white;
+        &:hover {
+            color: gray;
+        }
     }
     &__input {
         width: 100%;

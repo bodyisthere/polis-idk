@@ -20,6 +20,17 @@ const getUserFriends = async (friendList) => {
     return friends;
 }
 
+const isTheyFriend = async (friendsArray, friendId) => {
+    let answer = true;
+    let index = 0;
+
+    while(answer && index < friendsArray.length) {
+        if(friendsArray[index] === friendId) answer = false;
+        index += 1;
+    }
+    return answer;
+}
+
 export const registration = async (body) => {
     const isUnique = await UserModel.findOne({ email: body.email });
 
@@ -94,18 +105,56 @@ export const getOne = async (id) => {
     return ({ ...userData })
 }
 
-export const toggleFriend = async () => {
+export const toggleFriend = async (myId, friendId) => {
+    let action = "";
+    let me = await UserModel.findById(myId);
+    let friend = await UserModel.findById(friendId);
 
+    if(await isTheyFriend(me.friendList, friendId)) {
+        action = "Вы добавили этого человека в друзья";
+        me.friendList = [...me.friendList, friendId];
+        friend.friendList = [...friend.friendList, myId];
+    } else {
+        action = "Вы удалили этого человека из друзей";
+        me.friendList = me.friendList.filter(el => el !== friendId);
+        friend.friendList = friend.friendList.filter(el => el !== myId);
+    }
+
+    await me.save();
+    await friend.save();
+
+    return ({message: action})
 }
 
-export const changeStatus = async () => {
+export const changeStatus = async (id, status) => {
+    const user = await UserModel.findById(id);
+    user.status = status;
 
+    await user.save();
+
+    return ({message: "Статус успешно изменён!"});
 }
 
-export const searchUser = async () => {
+export const searchUser = async (searchName) => {
+    if(searchName === undefined) {
+        return ({message: ''})
+    }
+    
+    const users = await UserModel.find({ fullName: {$regex: searchName, $options: "si"}}, {fullName: 1, _id: 1, avatarUrl: 1} );
+    
+    if(!users.length) {
+        return ({message: 'Никого не найдено с таким именем'})
+    }
 
+    return {users};
 }
 
-export const getNotifications = async () => {
+export const getNotifications = async (id) => {
+    const user = await UserModel.findById(id);
 
+    const notifications = user.notifications;
+    user.notifications = [];
+    await user.save();
+
+    return notifications;
 }

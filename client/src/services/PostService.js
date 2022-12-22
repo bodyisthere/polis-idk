@@ -1,6 +1,5 @@
-export async function addNewComment(res, postInfo, setPostInfo, setCommentInput, setPopMessage, setIsPopOpen) {
+export async function addNewComment(res, postInfo, setPostInfo, setCommentInput, setIsPopOpen) {
     if(!res.ok) {
-        setPopMessage('Не удалось добавить комментарий');
         setIsPopOpen('declined');
         return setTimeout(() => setIsPopOpen(false), 5000)
     }
@@ -43,9 +42,8 @@ export async function toggleLike(res, postInfo, setPostInfo, setLikeCondition) {
     })
 }
 
-export async function deletePost(res, setPopMessage, setIsPopOpen, userInfo, setUserInfo) {
+export async function deletePost(res, setIsPopOpen, userInfo, setUserInfo) {
     if(!res.ok) {
-        setPopMessage('Не удалось удалить пост');
         setTimeout(() => setIsPopOpen(false), 5000);
         return setIsPopOpen('declined');
     }
@@ -74,12 +72,11 @@ export async function getPostById(res, setPostInfo) {
     setPostInfo(response);
 }
 
-export async function uploadCover(res, setIsPopOpen, setPopMessage, setCover) {
+export async function uploadCover(res, setIsPopOpen, setCover) {
     const response = await res.json();
 
     if(!res.ok) {
         setIsPopOpen('declined');
-        setPopMessage(response.message);
         return setTimeout(() => setIsPopOpen(false), 5000);
     }
 
@@ -88,12 +85,11 @@ export async function uploadCover(res, setIsPopOpen, setPopMessage, setCover) {
     return setTimeout(() => setIsPopOpen(false), 5000);
 }
 
-export async function addNewPost(res, setError, setPopMessage, setIsPopOpen, userInfo, setUserInfo, goTo) {
+export async function addNewPost(res, setError, setIsPopOpen, userInfo, setUserInfo, goTo) {
     const response = await res.json();
 
     if(!res.ok) {
         setError(response);
-        setPopMessage('Не удалось загрузить пост')
         setIsPopOpen('declined');
         return;
     }

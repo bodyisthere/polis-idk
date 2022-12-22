@@ -6,10 +6,10 @@ import { UserController } from "../../controllers";
 
 
 function AllFriendCard( {fullName, avatarUrl, _id, me}) {
-    const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
+    const { userInfo, setUserInfo, setIsPopOpen } = React.useContext(MyContext);
 
     const friendActions = async () => {
-        UserController.toggleFriendFromList(_id, setIsPopOpen, setPopMessage, userInfo, setUserInfo)
+        UserController.toggleFriendFromList(_id, setIsPopOpen, userInfo, setUserInfo)
     }
 
     return (

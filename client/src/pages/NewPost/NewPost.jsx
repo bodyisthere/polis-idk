@@ -8,7 +8,7 @@ import { handleChangeFile } from '../../http/httpUniversal.js';
 import { PostController } from '../../controllers';
 
 export function NewPost() {
-    const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
+    const { userInfo, setUserInfo, setIsPopOpen } = React.useContext(MyContext);
 
     const [text, setText] = React.useState('');
     const [title, setTitle] = React.useState('');
@@ -29,11 +29,11 @@ export function NewPost() {
     }, [text, title, cover])
 
     const handleChangeCover = async (e) => {
-        PostController.uploadCover(e, setIsPopOpen, setPopMessage, setCover);
+        PostController.uploadCover(e, setIsPopOpen, setCover);
     }
 
     const sendPost = async () => {
-        PostController.addNewPost(body, setError, setPopMessage, setIsPopOpen, userInfo, setUserInfo, goTo)
+        PostController.addNewPost(body, setError, setIsPopOpen, userInfo, setUserInfo, goTo)
     }
  
 

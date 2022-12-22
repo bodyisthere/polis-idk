@@ -21,18 +21,6 @@ export async function getPostByIdReq(id) {
     return await fetch(`${MAIN_URL}/post/${id}`)
 }
 
-export async function addNewCommentReq(id, comment) {
-    return await fetch(`${MAIN_URL}/post/${id}`, {
-    method: 'post',
-    headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        authorization: `${localStorage.getItem("token")}`,
-    },
-    body: JSON.stringify({text: comment}),
-    })
-}
-
 export async function toggleLikeReq(id) {
     return await fetch(`${MAIN_URL}/post/${id}`, PUT_HEADER)
 }

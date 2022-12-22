@@ -1,6 +1,6 @@
 import { Server } from "socket.io";
 import checkSocketAuth from "../utils/checkSocketAuth.js";
-import { User } from '../Classes/ClassUser.js'
+import UserModel from "../schemas/User.js";
 import { SocketController } from "../controllers/index.js";
 
 
@@ -20,7 +20,7 @@ export function createSocketIO(server) {
     
         io.on('connection', async (socket) => {
             const id = socket.userId;
-            const user = await new User(id).getById();
+            const user = await UserModel.findById(id);
     
             console.log(`Новый юзер: ${user.fullName}`)
     

@@ -9,7 +9,7 @@ export const postRoutes = new Router();
 
 postRoutes.post("/posts", checkAuth, postCreateValidation, handleValidationErrors, PostController.create);
 postRoutes.delete("/posts/:id", checkAuth, PostController.remove);
-postRoutes.get('/post/:id', PostController.getPost);
+postRoutes.get('/post/:id', PostController.get);
 postRoutes.put('/post/:id', checkAuth, PostController.toggleLike);
-postRoutes.post('/post/:id', checkAuth, PostController.commentWrite);
-postRoutes.delete('/post/:id', checkAuth, PostController.commentDelete);
+// postRoutes.post('/post/:id', checkAuth, PostController.commentWrite);
+// postRoutes.delete('/post/:id', checkAuth, PostController.commentDelete);

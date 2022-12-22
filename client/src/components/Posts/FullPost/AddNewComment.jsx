@@ -1,16 +1,16 @@
 import React from "react";
 
 import { MyContext } from '../../../App.jsx'
-import { PostController } from '../../../controllers/index.js'
+import { CommentController } from "../../../controllers/index.js";
 
 function AddNewComment( { postInfo, setPostInfo } ) {
-    const { setPopMessage, setIsPopOpen } = React.useContext(MyContext);
+    const { setIsPopOpen } = React.useContext(MyContext);
 
     const [commentInput, setCommentInput] = React.useState('');
 
     const onClick = () => {
         const id = postInfo.post._id;
-        PostController.addNewComment(id, commentInput, postInfo, setPostInfo, setCommentInput, setPopMessage, setIsPopOpen)
+        CommentController.create(commentInput, id, postInfo, setPostInfo, setCommentInput, setIsPopOpen);
     }
 
     return (

@@ -4,7 +4,6 @@ import "./App.scss";
 
 import Navigation from "./navigation/Navigation";
 import { Header, PopUp, FullPost, NotificationsPop } from "./components/index.js";
-import { getPostById } from "./http/http.js";
 
 import { UserController, PostController, SocketController } from './controllers/index.js'
 import { useNavigate } from "react-router-dom";
@@ -20,7 +19,6 @@ function App() {
   const [notifications, setNotifications] = React.useState([]);
   const [messages, setMessages] = React.useState('');
   const [postInfo, setPostInfo] = React.useState();
-  const [popMessage, setPopMessage] = React.useState('');
   
   //переменные вспомогательные
   const [isPopOpen, setIsPopOpen] = React.useState(false);
@@ -56,7 +54,7 @@ function App() {
     <div className="App">
       {isPostFromOpen ? <FullPost setIsPostFromOpen={setIsPostFromOpen} postInfo={postInfo} setPostInfo={setPostInfo} setIsPostOpen={setIsPostOpen}></FullPost> : ''}
       <NotificationsPop notifications={notifications} setNotifications={setNotifications}/>
-      {isPopOpen ? <PopUp isPopOpen={isPopOpen} popMessage={popMessage}/> : ""}
+      {isPopOpen ? <PopUp isPopOpen={isPopOpen} setIsPopOpen={setIsPopOpen}/> : ""}
       <MyContext.Provider value={
         { 
         userInfo, setUserInfo, 
@@ -65,7 +63,6 @@ function App() {
         isAuth, setIsAuth, 
         isPostOpen, setIsPostOpen, 
         currentPost, setCurrentPost, 
-        setPopMessage, 
         openPost, 
         socket,
         isConnected, setIsConnected,

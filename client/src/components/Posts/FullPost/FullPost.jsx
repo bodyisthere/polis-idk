@@ -44,7 +44,13 @@ export function FullPost( { postInfo, setPostInfo, setIsPostOpen, setIsPostFromO
                             </div>
                         </div>
                         <div className="full-post__comments">
-                            {postInfo.post.comments.map((el, index) => <Comment {...el} key={index}/>)}
+                            {
+                            postInfo.post.comments.length 
+                            ?
+                            postInfo.post.comments.map((el, index) => <Comment _id={el} key={index} postInfo={postInfo} setPostInfo={setPostInfo}/>)
+                            : 
+                            ''    
+                        }
                         </div>
                         <AddNewComment postInfo={postInfo} setPostInfo={setPostInfo}/>
                     </div>

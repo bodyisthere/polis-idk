@@ -6,7 +6,7 @@ import { getPageInfo } from "../../utils/getPageInfo";
 import ConversationMessage from "./ConversationMessage";
 
 export function Conversation() {
-    const { guest, userInfo, setIsPopOpen, setPopMessage, setGuest, isConnected, socket } = React.useContext(MyContext);
+    const { guest, userInfo, setIsPopOpen, setGuest, isConnected, socket } = React.useContext(MyContext);
 
     const [ isLoading, setIsLoading ] = React.useState(true);
     const [msg, setMsg] = React.useState('');
@@ -19,7 +19,7 @@ export function Conversation() {
         if(!userInfo) goTo();
         async function fetchData() {
             const action = 'dialogue'
-            const guestInfo = await guest ? setIsLoading(false) : await getPageInfo(setGuest, setIsPopOpen, setPopMessage, '', setIsLoading, action);
+            const guestInfo = await guest ? setIsLoading(false) : await getPageInfo(setGuest, setIsPopOpen, '', setIsLoading, action);
         }
         fetchData();
     }, [])

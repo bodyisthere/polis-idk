@@ -4,7 +4,7 @@ import { MyContext } from "../../../App";
 import { UserController } from "../../../controllers";
 
 function MyStatus() {
-  const { userInfo, setUserInfo, setIsPopOpen, setPopMessage } = React.useContext(MyContext);
+  const { userInfo, setUserInfo, setIsPopOpen } = React.useContext(MyContext);
 
   const [statusChange, setStatusChange] = React.useState(false);
   const [statusText, setStatusText] = React.useState("");
@@ -22,7 +22,7 @@ function MyStatus() {
         />
         <button 
           className="preview-profile__status-submit" 
-          onClick={() => UserController.changeStatus(statusText, setPopMessage, setIsPopOpen, setStatusChange, userInfo, setUserInfo, setStatusText)}>
+          onClick={() => UserController.changeStatus(statusText, setIsPopOpen, setStatusChange, userInfo, setUserInfo, setStatusText)}>
             <i className="fa-regular fa-circle-check"></i>
         </button>
       </>

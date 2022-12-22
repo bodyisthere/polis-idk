@@ -7,13 +7,13 @@ import { SocketController, UserController } from "../../../controllers";
 
 
 function GuestPreviewProfile() {
-    const { guest, setIsPopOpen, setPopMessage, userInfo, setGuest, socket } = React.useContext(MyContext);
+    const { guest, setIsPopOpen, userInfo, setGuest, socket } = React.useContext(MyContext);
 
     const [inActive, setInActive] = React.useState('');
     const [isFriend, setIsFriend] = React.useState(() => isTheyFriend(userInfo, guest));
     
     const friendActions = async () => {
-      UserController.toggleFriend(setInActive, guest, setGuest, userInfo, setIsPopOpen, setPopMessage);
+      UserController.toggleFriend(setInActive, guest, setGuest, userInfo, setIsPopOpen);
       SocketController.toggleFriend(guest._id, isFriend ? 'delete' : 'add', socket);
       setIsFriend(!isFriend);
     }

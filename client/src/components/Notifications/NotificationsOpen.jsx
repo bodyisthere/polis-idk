@@ -13,9 +13,11 @@ export default function NotificationsOpen() {
         UserController.getNotifications(notifications, setNotifications);
     }, [])
 
+    console.log(notifications)
+
     const notificationType = (el, index) => {
-        if(el.action === 'add-friend') <NotificationAddFriend key={index} {...el}/>
-        if(el.action === 'like') <NotificationLike key={index} {...el}/>
+        if(el.action === 'add-friend') return <NotificationAddFriend key={index} {...el}/>
+        if(el.action === 'like') return <NotificationLike key={index} {...el}/>
     }
 
     return (

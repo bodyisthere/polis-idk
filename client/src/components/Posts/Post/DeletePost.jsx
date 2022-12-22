@@ -4,12 +4,12 @@ import { MyContext } from "../../../App";
 import { PostController } from "../../../controllers";
 
 function DeletePost( {postInfo} ) {
-    const { userInfo, setPopMessage, setIsPopOpen, setUserInfo } = React.useContext(MyContext);
+    const { userInfo, setIsPopOpen, setUserInfo } = React.useContext(MyContext);
 
     
     const onClick = () => {
         const id = postInfo.post._id;
-        PostController.deletePost(id, setPopMessage, setIsPopOpen, userInfo, setUserInfo)
+        PostController.deletePost(id, setIsPopOpen, userInfo, setUserInfo)
     }
 
     return (

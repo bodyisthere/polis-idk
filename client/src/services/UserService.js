@@ -6,7 +6,7 @@ export async function tokenAuth(res, setUserInfo, setIsAuth, setIsLoading) {
     setIsLoading(false);
 }
 
-export async function toggleFriend(res, setIsPopOpen, guest, setGuest, user, setPopMessage) {
+export async function toggleFriend(res, setIsPopOpen, guest, setGuest, user) {
     const response = await res.json();
     setTimeout(() => setIsPopOpen(false), 5000);
     if(response.message === 'Вы добавили этого человека в друзья') {
@@ -31,15 +31,13 @@ export async function toggleFriend(res, setIsPopOpen, guest, setGuest, user, set
             friendList
         })
     }
-    setPopMessage(`${response.message}`);
     setIsPopOpen('declined');
     setTimeout(() => setIsPopOpen(false), 5000);
 }
 
-export async function toggleFriendFromList(res, id, setIsPopOpen, setPopMessage, userInfo, setUserInfo) {
+export async function toggleFriendFromList(res, id, setIsPopOpen, userInfo, setUserInfo) {
     if(!res.ok) {
             const json = await res.json();
-            setPopMessage(json?.message ? json.message : 'Не удалось');
             setIsPopOpen('declined');
             return setTimeout(() => setIsPopOpen(false), 5000)
         }
@@ -52,10 +50,8 @@ export async function toggleFriendFromList(res, id, setIsPopOpen, setPopMessage,
         return setTimeout(() => setIsPopOpen(false), 5000)
 }
 
-export async function changeAvatar(res, setPopMessage, setIsPopOpen, userInfo, setUserInfo) {
+export async function changeAvatar(res, setIsPopOpen, userInfo, setUserInfo) {
     if(!res.ok) {
-        const json = await res.json()
-        setPopMessage(json.message);
         setIsPopOpen('declined');
         return setTimeout(() => setIsPopOpen(false), 5000)
       }
@@ -72,10 +68,9 @@ export async function changeAvatar(res, setPopMessage, setIsPopOpen, userInfo, s
     return setTimeout(() => setIsPopOpen(false), 5000);
 }
 
-export async function changeStatus(res, setPopMessage, userInfo, setUserInfo, setStatusChange, setIsPopOpen, statusText) {
+export async function changeStatus(res, userInfo, setUserInfo, setStatusChange, setIsPopOpen, statusText) {
     if (!res.ok) {
         const resJson = await res.json()
-        setPopMessage(resJson.message);
         throw new Error(resJson?.message);
       }
   

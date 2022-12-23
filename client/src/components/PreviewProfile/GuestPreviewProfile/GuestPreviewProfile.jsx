@@ -7,10 +7,14 @@ import { SocketController, UserController } from "../../../controllers";
 
 
 function GuestPreviewProfile() {
-    const { guest, setIsPopOpen, userInfo, setGuest, socket } = React.useContext(MyContext);
+    const { guest, setIsPopOpen, userInfo, setGuest, socket, userOnline, setUserOnline } = React.useContext(MyContext);
 
     const [inActive, setInActive] = React.useState('');
     const [isFriend, setIsFriend] = React.useState(() => isTheyFriend(userInfo, guest));
+
+    React.useEffect(() => {
+      SocketController.getOnlineUser(socket, [guest._id]);
+    }, [])
     
     const friendActions = async () => {
       UserController.toggleFriend(setInActive, guest, setGuest, userInfo, setIsPopOpen);
@@ -27,6 +31,13 @@ function GuestPreviewProfile() {
           </div>
           <div className="preview-profile__avatar">
             <img src={`http://localhost:4444/uploads/${guest.avatarUrl}`} alt={guest.fullName}/>
+            {
+              userOnline.includes(guest._id)
+              ?
+              <span title='В сети' className="preview-profile__online"></span>
+              :
+              ''
+            }
           </div>
           <div className="preview-profile__username">{guest.fullName}</div>
           <div className="preview-profile__status-container">

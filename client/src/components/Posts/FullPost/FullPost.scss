@@ -97,6 +97,9 @@
         justify-content: space-between;
         margin-bottom: 10px;
     }
+    &__comment-edited {
+        color: #1da1f2;
+    }
     &__comment-avatar {
         width: 40px;
         height: 40px;
@@ -119,6 +122,11 @@
         justify-content: center;
         flex-grow: 1;
         text-align: left;
+    }
+    &__comment-textarea {
+        background: transparent;
+        color: white;
+        resize: none;
     }
     &__comment-author {
         font-weight: 700;

@@ -95,40 +95,20 @@ export async function toggleFriend(io, user, friendId, action) {
     }
 }
 
-export async function getAllMessages(io, user) {
-    try {
-        io.sockets.sockets.forEach(el => {
-            if(el.userId === user._id.toString()) {
-                io.to(el.id).emit('send-all-messages', user.messages);
+export async function getOnlineUser(io, user, users) {
+    let usersId = users.map(el => el._id ? el._id : el);
+    let onlineStatus = [];
+    
+    io.sockets.sockets.forEach(el => {
+        for(let i = 0; i < usersId.length; i++) {
+            if(usersId[i] === el.userId) {
+                return onlineStatus.push(
+                    usersId[i],
+                )
             }
-        })
-    } catch (err) {
-       console.log(err) 
-    }
-}
+        }
+    })
+    const { isOnline, id, idDB} = await isUserOnline(io, user._id)
 
-export async function getOneDialogue(io, user, conversationId) {
-    try {
-        const dialogue = await ConversationModel.findById(conversationId);
-        
-        let { members, ...other } = dialogue._doc;
-
-        members = await Promise.all(members.map(async el => {
-            return await UserModel.findById(el, {
-                fullName: 1, _id: 1, avatarUrl: 1
-            })
-        }))
-
-        io.sockets.sockets.forEach(el => {
-            if(dialogue._doc.members.includes(el.userId)) {
-                io.to(el.id).emit('recieve-one-dialogue', {
-                    ...other, 
-                    members
-                })
-            }
-        })
-
-    } catch (err) {
-        console.log(err);
-    }
+    io.to(id).emit('recieve-online-user', onlineStatus);
 }

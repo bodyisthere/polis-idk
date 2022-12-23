@@ -18,6 +18,7 @@ export function MyPreviewProfile() {
           </div>
           <div className="preview-profile__avatar">
             <img src={`http://localhost:4444/uploads/${userInfo.avatarUrl}`} alt={userInfo.fullName}/>
+            <span title="В сети" className="preview-profile__online"></span>
           </div>
         <div className="preview-profile__username">
           {userInfo.fullName}

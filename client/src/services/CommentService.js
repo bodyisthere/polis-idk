@@ -1,10 +1,21 @@
 export async function get(response, setComment) {
     if(!response.ok) throw new Error('Ошибка получения комментария')
-    setComment(await response.json());
+    const comment = await response.json();
+    setComment(comment);
+    return comment;
 }
-export async function update() {
-    
+export async function edit(res, setComment, setIsPopOpen) {
+    if(!res.ok) {
+        setIsPopOpen('declined')
+        throw new Error('Не удалось изменить комментарий')
+    }
+    const response = await res.json();
+
+    setComment(response);
+    setIsPopOpen('success');
+    return setTimeout(() => setIsPopOpen(false), 5000)
 }
+
 export async function create(response, postInfo, setPostInfo, setIsPopOpen) {
     if(!response.ok) {
         setIsPopOpen('declined');

@@ -54,7 +54,7 @@ export async function getByName(searchValue, setFoundPeople) {
 
 export async function getPageInfo(id, setGuest, setIsLoading, setError) {
     const res = await getPageReq(id);
-    UserService.getPageInfo(res, setGuest, setError, setIsLoading);
+    return UserService.getPageInfo(res, setGuest, setError, setIsLoading);
 }
 
 export async function auth(URL, body, setUserInfo, setIsAuth, setError, goTo) {

@@ -1,6 +1,6 @@
 import { io } from "socket.io-client";
 
-export async function connection(isAuth, socket, setNotifications, setIsConnected, setMessages) {
+export async function connection(isAuth, socket, setNotifications, setIsConnected, setMessages, setUserOnline) {
     if(!isAuth && socket.current) return;
 
     setIsConnected(true);
@@ -20,10 +20,16 @@ export async function connection(isAuth, socket, setNotifications, setIsConnecte
     socket.current.on('add-friend', (x) => {
         setNotifications(prev => [...prev, x])
     })
+
+    socket.current.on('recieve-online-user', (isOnline) => {
+        setUserOnline(isOnline)
+    })
   
     socket.current.on('disconnect', () => {
         setIsConnected(false);
     }) 
+
+    socket.current.on()
 }
 
 export function like(postId, likeCondition, socket) {
@@ -40,4 +46,8 @@ export function getAllMessages(socket) {
   
 export function getOneDialogue(socket, conversationId) {
     socket.current.emit('get-one-dialogue', conversationId)
+}
+
+export function getOnlineUser(socket, users) {
+    socket.current.emit('get-online-user', users);
 }

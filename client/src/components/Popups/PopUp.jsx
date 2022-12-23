@@ -6,7 +6,7 @@ export function PopUp( { isPopOpen, setIsPopOpen } ) {
       <div className="popup__content">
         {isPopOpen === 'success' ? 'Успех' : 'Ошибка'}
       </div>
-      <div className="popup__close"><i className="fa-solid fa-xmark"></i></div>
+      <div className="popup__close" title="Закрыть" onClick={() => setIsPopOpen(false)}><i className="fa-solid fa-xmark"></i></div>
     </div>
   );
 }

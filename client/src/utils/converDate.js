@@ -1,4 +1,5 @@
 export default function convertDate(date) {
+    console.log(date)
     const data = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря',]
     const time = date;
 

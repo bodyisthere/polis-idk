@@ -61,6 +61,17 @@
     &__friend-info {
         display: flex;
         align-items: center;
+        position: relative;
+    }
+    &__friend-online {
+        position: absolute;
+        bottom: 0px;
+        left: 60px;
+        display: block;
+        background: rgb(27, 255, 27);
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
     }
     &__friend-avatar {
         width: 80px;

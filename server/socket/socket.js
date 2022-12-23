@@ -32,12 +32,7 @@ export function createSocketIO(server) {
 
             socket.on('friend-add', (friendId, action) => SocketController.toggleFriend(io, user, friendId, action))
 
-            socket.on('send-message', (message, friendId, action) => SocketController.sendMessage(io, user, message, friendId, action ))
-
-            socket.on('get-all-messages', () => SocketController.getAllMessages(io, user))
-
-            socket.on('get-one-dialogue', (conversationId) => SocketController.getOneDialogue(io, user, conversationId))
-
+            socket.on('get-online-user', (users) => SocketController.getOnlineUser(io, user, users))
         })
           
     

@@ -4,15 +4,17 @@ import { CommentService } from '../services/index.js';
 export async function get(commentId, setComment) {
     try {
         const response = await httpComment.get(commentId);
-        CommentService.get(response, setComment);
+        return await CommentService.get(response, setComment);
     } catch (err) {
         console.log(err);
     }
 }
-export async function update() {
+export async function edit(commentId, text, setComment, setIsPopOpen) {
     try {
-        const res = await httpComment.update();
+        if(text.length === 0) return;
+        const res = await httpComment.edit(commentId, text);
         
+        CommentService.edit(res, setComment, setIsPopOpen);
     } catch (err) {
         console.log(err);
     }

@@ -105,7 +105,8 @@ export async function getPageInfo(res, setGuest, setError, setIsLoading) {
     }
     const json = await res.json();
     setGuest(json);
-    setIsLoading(false)
+    setIsLoading(false);
+    return json;
 }
 
 export async function auth(res, setUserInfo, setIsAuth, setError, goTo) {

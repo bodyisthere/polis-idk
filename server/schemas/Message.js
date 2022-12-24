@@ -2,15 +2,16 @@ import mongoose from "mongoose";
 
 const messageSchema = new mongoose.Schema(
   {
-    conversationId: {
+    sender: {
       type: String,
     },
-    sender: {
-        type: String,
-    },
     text: {
-        type: String,
+      type: String,
     },
+    isEdited: {
+      type: Boolean,
+      default: false,
+    }
   },
   {
     timestamps: true,

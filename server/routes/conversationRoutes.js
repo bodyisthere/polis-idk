@@ -5,7 +5,8 @@ import checkAuth from "../utils/checkAuth.js";
 
 export const conversationRoutes = new Router();
 
-conversationRoutes.post("/conversation/:id", checkAuth, ConversationController.createOrGetDialogue);
-// conversationRoutes.put("/comment/:commentId", checkAuth, ConversationController.edit);
+conversationRoutes.post("/conversation/:userId", checkAuth, ConversationController.createOrGetDialogue);
+conversationRoutes.delete("/conversation/:dialogueId", checkAuth, ConversationController.deleteDialogue);
+conversationRoutes.get("/conversation", checkAuth, ConversationController.getAllDialogues);
 // conversationRoutes.post("/comment/:postId", checkAuth, ConversationController.create);
 // conversationRoutes.delete("/comment/:commentId", checkAuth, ConversationController.remove);

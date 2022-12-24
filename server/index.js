@@ -5,7 +5,7 @@ import { instrument } from "@socket.io/admin-ui";
 
 import { dBConnect } from './DB/dBConnect.js'
 import { createSocketIO } from './socket/socket.js'
-import { userRoutes, postRoutes, commentRoutes, universalRoutes, conversationRoutes } from "./routes/index.js"
+import { userRoutes, postRoutes, commentRoutes, universalRoutes, conversationRoutes, messageRoutes } from "./routes/index.js"
 
 dBConnect()
 
@@ -28,6 +28,7 @@ app.use(postRoutes);
 app.use(commentRoutes);
 app.use(universalRoutes);
 app.use(conversationRoutes);
+app.use(messageRoutes);
 
 
 // app.post('/conversation/:guestId', checkAuth, MessageController.createDialogue);

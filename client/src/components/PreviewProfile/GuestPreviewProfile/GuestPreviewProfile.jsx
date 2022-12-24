@@ -49,7 +49,7 @@ function GuestPreviewProfile() {
           </div>
           <div className="preview-profile__buttons">
             <button className='preview-profile__my-page' disabled={inActive} onClick={friendActions}>{isFriend ? 'Удалить из друзей' : 'Добавить в друзья'}</button>
-            <Link to={`/conversation/`} className="preview-profile__send-message">Отправить сообщение</Link>
+            <Link to={`/conversation/${guest._id}`} className="preview-profile__send-message">Отправить сообщение</Link>
           </div>
         </div>
         : 

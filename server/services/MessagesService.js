@@ -36,11 +36,15 @@ export async function edit(userId, messageId, text) {
     return message;
 }
 
-export async function remove(messageId, conversationId) {
-    const message = await MessageModel.findOneAndDelete(messageId);
+export async function remove(messages, conversationId) {
     const conversation = await ConversationModel.findById(conversationId);
 
-    conversation.messages = conversation.messages.filter(el => el._id !== messageId);
+    const res = await Promise.all(messages.map(async el => {
+        const message = await MessageModel.findByIdAndDelete(el);
+        return message._id.toString();
+    }));
+
+    conversation.messages = conversation.messages.filter(el => !res.includes(el.toString()))
     conversation.save();
 
     return {message: 'success'};

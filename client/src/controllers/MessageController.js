@@ -9,6 +9,22 @@ export async function get(messageId, setMessage) {
         console.log(err);
     }
 }
+
 export async function edit() {}
-export async function remove() {}
-export async function create() {}
+
+export async function remove(messagesId, conversationId) {
+    try {
+        const response = await httpMessage.remove(messagesId, conversationId);
+        MessageService.remove(response)
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+export async function create(conversationId, text) {
+    try {
+        const response = await httpMessage.create(conversationId, text)
+    } catch (err) {
+        console.log(err)
+    }
+}

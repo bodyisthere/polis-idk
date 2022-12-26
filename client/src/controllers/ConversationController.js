@@ -1,9 +1,9 @@
 import { httpConversation } from "../http";
 import { ConversationService } from "../services";
 
-export async function createOrGetDialogue(guestId, setMessages) {
+export async function createOrGetDialogue(guestId, setMessages, setConversation) {
     const response = await httpConversation.createOrGetDialogue(guestId);
-    ConversationService.createOrGetDialogue(response, setMessages);
+    ConversationService.createOrGetDialogue(response, setMessages, setConversation);
 }
 
 export async function getAllDialogues() {

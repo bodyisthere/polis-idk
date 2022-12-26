@@ -35,7 +35,7 @@ export async function edit(req, res) {
 
 export async function remove(req, res) {
     try {
-        const response = await MessageService.remove(req.params.messageId, req.headers.conversationId);
+        const response = await MessageService.remove(req.body.messages, req.body.conversationId);
 
         res.json(response);
     } catch (err) {
@@ -43,6 +43,7 @@ export async function remove(req, res) {
         handleError(res, 'Не удалось удалить сообщение')
     }
 }
+
 
 // export async function createDialogue(req, res) {
 //     try {

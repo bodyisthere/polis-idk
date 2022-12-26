@@ -1,11 +1,11 @@
 import React from 'react'
 
-import './Messages.scss'
+import '../Messages.scss'
 
-import { getAllMessages } from '../../socket/socket'
+import { getAllMessages } from '../../../socket/socket'
 // import { getAllMessages } from '../../http/http'
 import Message from './Message.jsx'
-import { MyContext } from '../../App.jsx'
+import { MyContext } from '../../../App.jsx'
 
 export function Messages() {
 

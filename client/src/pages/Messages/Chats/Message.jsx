@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { MyContext } from '../../App.jsx';
+import { MyContext } from '../../../App.jsx';
 
-import { getOneDialogue } from '../../socket/socket.js';
+import { getOneDialogue } from '../../../socket/socket.js';
 
 function Message( {id} ) {
 

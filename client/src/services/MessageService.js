@@ -5,5 +5,7 @@ export async function get(res, setMessage) {
     setMessage(response);
 }
 export async function edit() {}
-export async function remove() {}
+export async function remove(response) {
+    if(!response.ok) throw new Error('Не удалось удалить сообщения');
+}
 export async function create() {}

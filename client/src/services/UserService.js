@@ -105,7 +105,7 @@ export async function getPageInfo(res, setGuest, setError, setIsLoading) {
     }
     const json = await res.json();
     setGuest(json);
-    setIsLoading(false);
+    if(setIsLoading) setIsLoading(false);
     return json;
 }
 

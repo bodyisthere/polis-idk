@@ -17,9 +17,11 @@ function App() {
   const [guest, setGuest] = React.useState();
   const [currentPost, setCurrentPost] = React.useState('');
   const [notifications, setNotifications] = React.useState([]);
-  const [messages, setMessages] = React.useState('');
   const [postInfo, setPostInfo] = React.useState();
   const [userOnline, setUserOnline] = React.useState('');
+  const [conversation, setConversation] = React.useState('');
+  const [messages, setMessages] = React.useState('');
+
 
   //переменные вспомогательные
   const [isPopOpen, setIsPopOpen] = React.useState(false);
@@ -39,7 +41,7 @@ function App() {
   React.useEffect(() => {
     if(localStorage.getItem('token')) {
       UserController.tokenAuth(setUserInfo, setIsAuth, setIsLoading);
-      SocketController.connection(isAuth, socket, setNotifications, setIsConnected, setMessages, setUserOnline)
+      SocketController.connection(isAuth, socket, setNotifications, setIsConnected, setUserOnline, setConversation, setMessages)
     } else {
       goTo('/');
       setIsLoading(false);
@@ -68,7 +70,8 @@ function App() {
         socket,
         isConnected, setIsConnected,
         messages, setMessages,
-        userOnline, setUserOnline
+        userOnline, setUserOnline,
+        conversation, setConversation
         }}
       >
         {isLoading 

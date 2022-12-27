@@ -57,8 +57,20 @@
     position: absolute;
     bottom: 0px;
     right: 0px;
+    z-index: 50;
     display: block;
     background: rgb(27, 255, 27);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+  }
+  &__offline {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    z-index: 50;
+    display: block;
+    background: rgb(124, 17, 17);
     width: 25px;
     height: 25px;
     border-radius: 50%;

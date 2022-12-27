@@ -3,7 +3,7 @@ import React from "react";
 import "./Notifications.scss";
 
 import { MyContext } from "../../App";
-import NotificationsOpen from "./NotificationsOpen";
+import NotificationsOpen from "./NotificationWindow/NotificationsOpen";
 
 export function Notifications() {
   const { userInfo } = React.useContext(MyContext);

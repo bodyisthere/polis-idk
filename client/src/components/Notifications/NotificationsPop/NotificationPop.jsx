@@ -1,6 +1,5 @@
 import React from 'react'
-import './Notifications.scss'
-import audio from '../../assets/audio/messageSound.mp3'
+import audio from '../../../assets/audio/messageSound.mp3'
 
 export default function NotificationPop( {fullName, avatar, setNotifications, action} ) {
 

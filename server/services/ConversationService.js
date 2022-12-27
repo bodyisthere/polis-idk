@@ -2,7 +2,7 @@ import ConversationModel from "../schemas/Conversation.js"
 import UserModel from '../schemas/User.js'
 
 export async function createOrGetDialogue(userId, guestId) {
-    const conversation = await ConversationModel.findOne({ members: [userId, guestId] });
+    const conversation = await ConversationModel.findOne({ members: {$all : [userId, guestId]} });
 
     const user = await UserModel.findById(userId);
     const guest = await UserModel.findById(guestId);

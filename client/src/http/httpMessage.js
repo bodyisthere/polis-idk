@@ -25,8 +25,16 @@ const GET_HEADER = {
 export async function get(messageId) {
     return await fetch(`${MAIN_URL}/message/${messageId}`, GET_HEADER)
 }
-export async function edit(messageId) {
-    return await fetch(`${MAIN_URL}/message/${messageId}`)
+export async function edit(messageId, text) {
+    return await fetch(`${MAIN_URL}/message/${messageId}`, {
+        method: 'put',
+        headers: { 
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({text}),   
+    })
 }
 export async function remove(messagesId, conversationId) {
     return await fetch(`${MAIN_URL}/message/${conversationId}`, {
@@ -36,12 +44,10 @@ export async function remove(messagesId, conversationId) {
             "Content-Type": "application/json",
             authorization: localStorage.getItem("token"),
         },
-        body: JSON.stringify({messages : messagesId, conversationId,}),
-        
+        body: JSON.stringify({messages : messagesId, conversationId,}),   
     })
 }
 export async function create(conversationId, text) {
-    console.log(text)
     return await fetch(`${MAIN_URL}/message/${conversationId}`, {
         method: 'post',
         headers: { 

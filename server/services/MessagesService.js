@@ -3,13 +3,16 @@ import ConversationModel from "../schemas/Conversation.js"
 
 export async function create(conversationId, senderId, text) {
     if(!text) throw new Error('Текст сообщения не может быть пуст')
+
+    const conversation = await ConversationModel.findById(conversationId);
+
     const doc = new MessageModel({
         sender: senderId,
         text: text,
     });
 
     const message = await doc.save();
-    const conversation = await ConversationModel.findById(conversationId);
+
 
     conversation.messages.push(message._id);
     await conversation.save();
@@ -47,5 +50,5 @@ export async function remove(messages, conversationId) {
     conversation.messages = conversation.messages.filter(el => !res.includes(el.toString()))
     conversation.save();
 
-    return {message: 'success'};
+    return {messages,};
 }

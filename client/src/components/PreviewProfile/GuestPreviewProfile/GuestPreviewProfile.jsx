@@ -36,7 +36,7 @@ function GuestPreviewProfile() {
               ?
               <span title='В сети' className="preview-profile__online"></span>
               :
-              ''
+              <span title='Не в сети' className="preview-profile__offline"></span>
             }
           </div>
           <div className="preview-profile__username">{guest.fullName}</div>

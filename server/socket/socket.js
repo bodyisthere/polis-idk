@@ -33,6 +33,8 @@ export function createSocketIO(server) {
             socket.on('friend-add', (friendId, action) => SocketController.toggleFriend(io, user, friendId, action))
 
             socket.on('get-online-user', (users) => SocketController.getOnlineUser(io, user, users))
+
+            socket.on('send-message', (message, guestId) => SocketController.sendMessage(io, user, message, guestId))
         })
           
     

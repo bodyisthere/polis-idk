@@ -143,12 +143,20 @@
         &::-webkit-scrollbar { width: 0; }
         -ms-overflow-style: none;
     }
-    &__send {
-        width: 5%;
+    &__cancel {
+        width: 50px;
         border-radius: 15px;
         transition: all .05s;
         &:hover {
-            background: rgb(212, 211, 211);
+            background: rgb(147, 2, 2);
+        }
+    }
+    &__send {
+        width: 50px;
+        border-radius: 15px;
+        transition: all .05s;
+        &:hover {
+            background: rgb(1, 83, 1);
         }
     }
     &__connection {
@@ -199,6 +207,7 @@
         color: #fff;
         display: flex;
         overflow: hidden;
+        word-break: break-all;
         min-height: 40px;
         min-width: 150px;
         max-width: 50vw;
@@ -220,6 +229,12 @@
     &__time {
         margin-right: 5px;
         color: rgb(74, 80, 100);
+    }
+    &__edit {
+        margin-right: 5px;
+        &:hover{
+            color: #1da1f2;
+        }
     }
 }
 .conversation-message-guest {
@@ -263,3 +278,12 @@
     }
 }
 
+.conversation-message {
+    &__deleted {
+        border-radius: 15px;
+        width: 100%;
+        background: rgba(7, 118, 177, 0.204);
+        margin: 8px 0px 8px 0px;
+        padding: 10px;
+    }
+}

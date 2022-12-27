@@ -112,3 +112,11 @@ export async function getOnlineUser(io, user, users) {
 
     io.to(id).emit('recieve-online-user', onlineStatus);
 }
+
+export async function sendMessage(io, user, message, guest) {
+    const { isOnline, id, idDB } = await isUserOnline(io, guest)
+   
+    message.action = 'send-message';
+    message.sender = await UserModel.findById(message.sender);
+    io.to(id).emit('recieve-message', message);
+}

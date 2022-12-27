@@ -1,10 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom";
 
-import { MyContext } from "../../App.jsx";
-import { UserController } from "../../controllers/index.js";
-import { NotificationAddFriend } from "./NotificationsType/NotificationAddFriend.jsx";
-import { NotificationLike } from "./NotificationsType/NotificationLike.jsx";
+import { MyContext } from "../../../App.jsx";
+import { UserController } from "../../../controllers/index.js";
+import { NotificationAddFriend } from "../NotificationsType/NotificationAddFriend.jsx";
+import { NotificationLike } from "../NotificationsType/NotificationLike.jsx";
     
 export default function NotificationsOpen() {
     const [ notifications, setNotifications ] = React.useState([]);

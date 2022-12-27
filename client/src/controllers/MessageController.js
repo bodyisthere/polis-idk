@@ -10,20 +10,26 @@ export async function get(messageId, setMessage) {
     }
 }
 
-export async function edit() {}
+export async function edit(messageId, text, setMessages) {
+    const response = await httpMessage.edit(messageId, text);
 
-export async function remove(messagesId, conversationId) {
+    MessageService.edit(response, setMessages);
+}
+
+export async function remove(messagesId, conversationId, setMessages) {
     try {
         const response = await httpMessage.remove(messagesId, conversationId);
-        MessageService.remove(response)
+        MessageService.remove(response, setMessages)
     } catch (err) {
         console.log(err);
     }
 }
 
-export async function create(conversationId, text) {
+export async function create(conversationId, text, setMessages) {
     try {
-        const response = await httpMessage.create(conversationId, text)
+        const response = await httpMessage.create(conversationId, text);
+
+        return MessageService.create(response, setMessages);
     } catch (err) {
         console.log(err)
     }
